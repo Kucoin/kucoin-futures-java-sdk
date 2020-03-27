@@ -84,4 +84,6 @@ public class PositionResponse {
 
     private BigDecimal bankruptPrice;
 
+    private String settleCurrency;
+
 }

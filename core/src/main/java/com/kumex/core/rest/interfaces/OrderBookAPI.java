@@ -45,6 +45,7 @@ public interface OrderBookAPI {
      * @param end    End sequence number (included in the returned data)
      * @return The part level2 order book.
      */
+    @Deprecated
     List<Level2Message> getLevel2PullingMessages(String symbol, long start, long end) throws IOException;
 
     /**
@@ -65,6 +66,7 @@ public interface OrderBookAPI {
      * @param end    End sequence number (included in the returned data)
      * @return The part level3 order book.
      */
+    @Deprecated
     List<Level3Message> getLevel3PullingMessages(String symbol, long start, long end) throws IOException;
 
 }

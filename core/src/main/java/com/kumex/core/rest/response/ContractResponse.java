@@ -67,4 +67,6 @@ public class ContractResponse {
 
     private String status;
 
+    private BigDecimal maxLeverage;
+
 }

@@ -44,11 +44,11 @@ public class KumexPrivateWSClientImpl extends KumexPublicWSClientImpl implements
     }
 
     @Override
-    public String onStopOrderActivate(KumexAPICallback<KucoinEvent<StopOrderActivateEvent>> callback, String... symbols) {
+    public String onStopOrderActivate(KumexAPICallback<KucoinEvent<StopOrderActivateEvent>> callback) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_ACTIVATE_TOPIC_PREFIX, callback);
         }
-        String topic = APIConstants.API_ACTIVATE_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
+        String topic = APIConstants.API_ACTIVATE_TOPIC_PREFIX;
         return subscribe(topic, true, true);
     }
 

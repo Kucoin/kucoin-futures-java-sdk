@@ -33,9 +33,9 @@ public class AccountAPIAdapter extends AuthRetrofitAPIImpl<AccountAPIRetrofit> i
     }
 
     @Override
-    public HasMoreResponse<TransactionHistory> transactionHistory(String type, DuringHasMoreRequest request) throws IOException {
+    public HasMoreResponse<TransactionHistory> transactionHistory(String type, String currency, DuringHasMoreRequest request) throws IOException {
         if (request == null) request = DuringHasMoreRequest.builder().build();
         return super.executeSync(getAPIImpl().transactionHistory(request.getStarAt(), request.getEndAt(), type,
-                request.getOffset(), request.getMaxCount()));
+                request.getOffset(), request.getMaxCount(), currency));
     }
 }

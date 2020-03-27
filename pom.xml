@@ -7,7 +7,7 @@
     <groupId>com.kumex</groupId>
     <artifactId>kumex-java-sdk</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>kumex-java-sdk</name>
     <url>http://www.kumex.com</url>

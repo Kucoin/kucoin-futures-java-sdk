@@ -33,4 +33,6 @@ public class TransactionHistory {
 
     private long offset;
 
+    private String currency;
+
 }

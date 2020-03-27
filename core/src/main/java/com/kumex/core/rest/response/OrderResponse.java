@@ -71,6 +71,14 @@ public class OrderResponse {
 
     private Date createdAt;
 
+    private String settleCurrency;
+
+    private String status;
+
+    private Date updatedAt;
+
+    private Long orderTime;
+
     public String getStop() {
         return this.stop == null ? null : this.stop.toLowerCase();
     }

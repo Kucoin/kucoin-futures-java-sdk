@@ -24,4 +24,6 @@ public class ActiveOrderResponse {
 
     private BigDecimal openOrderSellCost;
 
+    private String settleCurrency;
+
 }

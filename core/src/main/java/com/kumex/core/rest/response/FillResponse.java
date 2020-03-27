@@ -47,6 +47,10 @@ public class FillResponse {
 
     private Date createdAt;
 
+    private String settleCurrency;
+
+    private Long tradeTime;
+
     public String getSide() {
         return this.side == null ? null : this.side.toLowerCase();
     }

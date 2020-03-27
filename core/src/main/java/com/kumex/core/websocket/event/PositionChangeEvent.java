@@ -90,6 +90,8 @@ public class PositionChangeEvent {
 
     private BigDecimal fundingFee;
 
+    private String settleCurrency;
+
     private Long ts;
 
 }
