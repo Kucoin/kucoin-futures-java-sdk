@@ -37,11 +37,13 @@ public interface AccountAPI {
      *
      * @param type     [Optional] Type RealisedPNL-Realised profit and loss, Deposit-Deposit, Withdrawal-withdraw,
      *                 Transferin-Transfer in, TransferOut-Transfer out
+     * @param currency [Optional] Currency of transaction history XBT or USDT
      * @param request  [Optional] include startAt endAt offset and maxCount optional parameters
      * @return The account balance.
      * @throws IOException on socket errors.
      * @throws KumexApiException when errors are returned from the exchange.
      */
-    HasMoreResponse<TransactionHistory> transactionHistory(String type, DuringHasMoreRequest request) throws IOException;
+    HasMoreResponse<TransactionHistory> transactionHistory(String type, String currency, DuringHasMoreRequest request)
+            throws IOException;
 
 }

@@ -35,6 +35,8 @@ public class FundingHistoryResponse implements Serializable {
 
     private BigDecimal funding;
 
+    private String settleCurrency;
+
     private String context;
     
 }

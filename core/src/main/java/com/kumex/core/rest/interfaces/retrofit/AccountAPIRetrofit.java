@@ -24,5 +24,6 @@ public interface AccountAPIRetrofit {
                                                                                 @Query("endAt") Long endAt,
                                                                                 @Query("type") String type,
                                                                                 @Query("offset") Long offset,
-                                                                                @Query("maxCount") Long maxCount);
+                                                                                @Query("maxCount") Long maxCount,
+                                                                                @Query("currency") String currency);
 }

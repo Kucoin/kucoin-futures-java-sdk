@@ -71,13 +71,17 @@ public class KumexWSClientTest {
             event.set(response.getData());
             kumexPrivateWSClient.unsubscribe(PrivateChannelEnum.STOP_ORDER, SYMBOL);
             gotEvent.countDown();
-        }, SYMBOL);
+        });
 
         MarkPriceResponse currentMarkPrice = kumexRestClient.indexAPI().getCurrentMarkPrice(SYMBOL);
         BigDecimal marketPrice = currentMarkPrice.getValue();
 
+        placeStopOrder(marketPrice.add(new BigDecimal("0.05")), "up");
+        placeStopOrder(marketPrice.add(new BigDecimal("0.5")), "up");
         placeStopOrder(marketPrice.add(BigDecimal.ONE), "up");
         placeStopOrder(marketPrice.subtract(BigDecimal.ONE), "down");
+        placeStopOrder(marketPrice.subtract(new BigDecimal("0.05")), "down");
+        placeStopOrder(marketPrice.subtract(new BigDecimal("0.5")), "down");
 
         boolean await = gotEvent.await(20, TimeUnit.SECONDS);
         kumexRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
