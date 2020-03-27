@@ -13,7 +13,7 @@ The detailed document [https://docs.kumex.com](https://docs.kucoin.com).
 <dependency>
     <groupId>com.kumex</groupId>
     <artifactId>kumex-java-sdk</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 ## Usage
@@ -174,7 +174,7 @@ kumexPublicWSClient.onTransactionStatistic(response -> {
 ```java
 kucoinPrivateWSClient.onStopOrderActivate(response -> {
             System.out.println(response);
-        }, symbols);
+        });
 ```
 
 ##### Listen for account balance changes
