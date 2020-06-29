@@ -35,10 +35,15 @@ public class TransferAPIAdapter extends AuthRetrofitAPIImpl<TransferAPIRetrofit>
     }
 
     @Override
-    public Pagination<TransferHistory> getTransferOutRecords(String status, DuringPageRequest request) throws IOException {
+    public TransferResponse toKucoinMainAccount(String bizNo, BigDecimal amount, String currency) throws IOException {
+        return super.executeSync(getAPIImpl().applyTransfer(bizNo, amount, currency));
+    }
+
+    @Override
+    public Pagination<TransferHistory> getTransferOutRecords(String status, String currency, DuringPageRequest request) throws IOException {
         if (request == null) request = DuringPageRequest.builder().build();
         return super.executeSync(getAPIImpl().getTransferOutRecords(request.getCurrentPage(), request.getPageSize(), status,
-                request.getStarAt(), request.getEndAt()));
+                currency, request.getStarAt(), request.getEndAt()));
     }
 
     @Override

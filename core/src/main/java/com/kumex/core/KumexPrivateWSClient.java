@@ -9,6 +9,7 @@ import com.kumex.core.websocket.event.AccountChangeEvent;
 import com.kumex.core.websocket.event.KucoinEvent;
 import com.kumex.core.websocket.event.PositionChangeEvent;
 import com.kumex.core.websocket.event.StopOrderActivateEvent;
+import com.kumex.core.websocket.event.StopOrderLifecycleEvent;
 
 /**
  * Created by chenshiwei on 2019/1/10.
@@ -21,7 +22,16 @@ public interface KumexPrivateWSClient extends KumexPublicWSClient {
      * @param callback
      * @return The subscription UUID, or null if sending failed.
      */
+    @Deprecated
     String onStopOrderActivate(KumexAPICallback<KucoinEvent<StopOrderActivateEvent>> callback);
+
+    /**
+     *
+     *
+     * @param callback
+     * @return
+     */
+    String onStopOrderLifecycle(KumexAPICallback<KucoinEvent<StopOrderLifecycleEvent>> callback);
 
     /**
      * You will receive this message when an account balance changes. The message contains the details of the change.

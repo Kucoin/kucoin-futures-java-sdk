@@ -21,6 +21,7 @@ import com.kumex.core.rest.response.OrderCreateResponse;
 import com.kumex.core.rest.response.OrderResponse;
 import com.kumex.core.rest.response.Pagination;
 import com.kumex.core.rest.response.PositionResponse;
+import com.kumex.core.rest.response.ServiceStatusResponse;
 import com.kumex.core.rest.response.TickerResponse;
 import com.kumex.core.rest.response.TransactionHistory;
 import com.kumex.core.rest.response.TransactionHistoryResponse;
@@ -78,7 +79,7 @@ public class KumexRestClientTest {
 
     @Test
     public void accountAPI() throws Exception {
-        AccountOverviewResponse accountOverviewResponse = sandboxKumexRestClient.accountAPI().accountOverview();
+        AccountOverviewResponse accountOverviewResponse = sandboxKumexRestClient.accountAPI().accountOverview(null);
         assertThat(accountOverviewResponse, notNullValue());
 
         HasMoreResponse<TransactionHistory> transactionHistoryHasMoreResponse = sandboxKumexRestClient.accountAPI()
@@ -97,14 +98,14 @@ public class KumexRestClientTest {
 
         exception.expect(KumexApiException.class);
         exception.expectMessage("Sandbox environment cannot get deposit address");
-        sandboxKumexRestClient.depositAPI().getDepositList("SUCCESS", pageRequest);
+        sandboxKumexRestClient.depositAPI().getDepositList("SUCCESS", null, pageRequest);
     }
 
     @Test
     @Ignore
     public void withdrawalAPI() throws Exception {
         Pagination<WithdrawResponse> withdrawList = sandboxKumexRestClient.withdrawalAPI()
-                .getWithdrawList("FAILURE", null);
+                .getWithdrawList("FAILURE", null, null);
         assertThat(withdrawList, notNullValue());
 
         WithdrawQuotaResponse kcs = sandboxKumexRestClient.withdrawalAPI().getWithdrawQuotas("XBT");
@@ -122,7 +123,7 @@ public class KumexRestClientTest {
     @Test
     @Ignore
     public void transferAPI() throws Exception {
-        Pagination<TransferHistory> records = sandboxKumexRestClient.transferAPI().getTransferOutRecords("SUCCESS", pageRequest);
+        Pagination<TransferHistory> records = sandboxKumexRestClient.transferAPI().getTransferOutRecords("SUCCESS", null, pageRequest);
         assertThat(records.getItems().size(), is(0));
 
         TransferResponse transferResponse = sandboxKumexRestClient.transferAPI().toKucoinMainAccount("123456", BigDecimal.valueOf(0.00000001));
@@ -218,16 +219,8 @@ public class KumexRestClientTest {
         OrderBookResponse fullOrderBookAggregated = sandboxKumexRestClient.orderBookAPI().getFullLevel2OrderBook(SYMBOL);
         assertThat(fullOrderBookAggregated, notNullValue());
 
-//        List<Level2Message> level2PullingMessages = sandboxKumexRestClient.orderBookAPI().getLevel2PullingMessages(SYMBOL,
-//                fullOrderBookAggregated.getSequence() - 1, fullOrderBookAggregated.getSequence());
-//        assertThat(level2PullingMessages.size(), is(2));
-
         OrderBookResponse fullOrderBookAtomic = sandboxKumexRestClient.orderBookAPI().getFullLevel3OrderBook(SYMBOL);
         assertThat(fullOrderBookAtomic, notNullValue());
-
-//        List<Level3Message> level3PullingMessages = sandboxKumexRestClient.orderBookAPI().getLevel3PullingMessages(SYMBOL,
-//                fullOrderBookAtomic.getSequence() - 1, fullOrderBookAtomic.getSequence());
-//        assertThat(level3PullingMessages.size(), is(2));
     }
 
     @Test
@@ -241,6 +234,19 @@ public class KumexRestClientTest {
         HasMoreResponse<InterestRateResponse> interestRateList = sandboxKumexRestClient.indexAPI()
                 .getInterestRateList(SYMBOL, null, null, hasMoreRequest);
         assertThat(interestRateList, notNullValue());
+    }
+
+    @Test
+    @Ignore
+    public void serviceStatusAPI() throws Exception {
+        ServiceStatusResponse serviceStatus = sandboxKumexRestClient.serviceStatusAPI().getServiceStatus();
+        assertThat(serviceStatus, notNullValue());
+    }
+
+    @Test
+    public void kChartAPI() throws Exception {
+        List<List<String>> kChart = sandboxKumexRestClient.kChartAPI().getKChart(SYMBOL, 60, null, null);
+        assertThat(kChart, notNullValue());
     }
 
     @Test

@@ -6,6 +6,7 @@ package com.kumex.core.rest.impl.retrofit;
 import com.kumex.core.factory.KumexObjectMapper;
 import com.kumex.core.exception.KumexApiException;
 import com.kumex.core.rest.response.KumexResponse;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Converter;
@@ -18,6 +19,7 @@ import java.lang.annotation.Annotation;
 /**
  * Created by chenshiwei on 2019/1/10.
  */
+@Slf4j
 public abstract class AbstractRetrofitAPIImpl<T> {
 
     private static final Converter.Factory jacksonConverterFactory = JacksonConverterFactory.create(KumexObjectMapper.INSTANCE);
@@ -44,6 +46,7 @@ public abstract class AbstractRetrofitAPIImpl<T> {
     public <R> R executeSync(Call<KumexResponse<R>> call) throws IOException {
         Response<KumexResponse<R>> response = call.execute();
         if (response.isSuccessful() && response.body().isSuccessful()) {
+            log.debug(response.body().toString());
             return response.body().getData();
         } else {
             KumexResponse<?> errorResponse;

@@ -28,6 +28,7 @@ public class APIConstants {
     public static final String API_TRANSACTION_TOPIC_PREFIX = "/contractMarket/snapshot:";
 
     public static final String API_ACTIVATE_TOPIC_PREFIX = "/contractMarket/stopOrder";
+    public static final String API_LIFECYCLE_TOPIC_PREFIX = "/contractMarket/advancedOrders";
     public static final String API_BALANCE_TOPIC_PREFIX = "/contractAccount/wallet";
     public static final String API_POSITION_TOPIC_PREFIX = "/contract/position:";
 }

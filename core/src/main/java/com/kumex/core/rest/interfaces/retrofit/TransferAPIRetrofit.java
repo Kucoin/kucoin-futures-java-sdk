@@ -26,10 +26,15 @@ public interface TransferAPIRetrofit {
     @POST("api/v1/transfer-out")
     Call<KumexResponse<TransferResponse>> applyTransfer(@Query("bizNo") String bizNo, @Query("amount") BigDecimal amount);
 
-    @GET("api/v1/transfer-out")
+    @POST("api/v2/transfer-out")
+    Call<KumexResponse<TransferResponse>> applyTransfer(@Query("bizNo") String bizNo, @Query("amount") BigDecimal amount,
+                                                        @Query("currency") String currency);
+
+    @GET("api/v1/transfer-list")
     Call<KumexResponse<Pagination<TransferHistory>>> getTransferOutRecords(@Query("currentPage") int currentPage,
                                                                           @Query("pageSize") int pageSize,
                                                                           @Query("status") String status,
+                                                                          @Query("currency") String currency,
                                                                           @Query("startAt") Long startAt,
                                                                           @Query("endAt") Long endAt);
 

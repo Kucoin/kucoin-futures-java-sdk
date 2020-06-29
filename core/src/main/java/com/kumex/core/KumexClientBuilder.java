@@ -13,9 +13,11 @@ import com.kumex.core.rest.adapter.FillAPIAdapter;
 import com.kumex.core.rest.adapter.FundingFeeAPIAdapter;
 import com.kumex.core.rest.adapter.HistoryAPIAdapter;
 import com.kumex.core.rest.adapter.IndexAPIAdapter;
+import com.kumex.core.rest.adapter.KChartAPIAdapter;
 import com.kumex.core.rest.adapter.OrderAPIAdapter;
 import com.kumex.core.rest.adapter.OrderBookAPIAdapter;
 import com.kumex.core.rest.adapter.PositionAPIAdapter;
+import com.kumex.core.rest.adapter.ServiceStatusAPIAdapter;
 import com.kumex.core.rest.adapter.SymbolAPIAdaptor;
 import com.kumex.core.rest.adapter.TickerAPIAdaptor;
 import com.kumex.core.rest.adapter.TimeAPIAdapter;
@@ -27,9 +29,11 @@ import com.kumex.core.rest.interfaces.FillAPI;
 import com.kumex.core.rest.interfaces.FundingFeeAPI;
 import com.kumex.core.rest.interfaces.HistoryAPI;
 import com.kumex.core.rest.interfaces.IndexAPI;
+import com.kumex.core.rest.interfaces.KChartAPI;
 import com.kumex.core.rest.interfaces.OrderAPI;
 import com.kumex.core.rest.interfaces.OrderBookAPI;
 import com.kumex.core.rest.interfaces.PositionAPI;
+import com.kumex.core.rest.interfaces.ServiceStatusAPI;
 import com.kumex.core.rest.interfaces.SymbolAPI;
 import com.kumex.core.rest.interfaces.TickerAPI;
 import com.kumex.core.rest.interfaces.TimeAPI;
@@ -84,6 +88,10 @@ public class KumexClientBuilder {
 
     private TimeAPI timeAPI;
 
+    private ServiceStatusAPI serviceStatusAPI;
+
+    private KChartAPI kChartAPI;
+
     private ChooseServerStrategy chooseServerStrategy;
 
     public KumexRestClient buildRestClient() {
@@ -102,6 +110,8 @@ public class KumexClientBuilder {
         if (historyAPI == null) historyAPI = new HistoryAPIAdapter(baseUrl);
         if (indexAPI == null) indexAPI = new IndexAPIAdapter(baseUrl);
         if (timeAPI == null) timeAPI = new TimeAPIAdapter(baseUrl);
+        if (serviceStatusAPI == null) serviceStatusAPI = new ServiceStatusAPIAdapter(baseUrl);
+        if (kChartAPI == null) kChartAPI = new KChartAPIAdapter(baseUrl);
         return new KumexRestClientImpl(this);
     }
 
@@ -198,6 +208,16 @@ public class KumexClientBuilder {
 
     public KumexClientBuilder withTickerAPI(TickerAPI tickerAPI) {
         this.tickerAPI = tickerAPI;
+        return this;
+    }
+
+    public KumexClientBuilder withServiceStatusAPI(ServiceStatusAPI serviceStatusAPI) {
+        this.serviceStatusAPI = serviceStatusAPI;
+        return this;
+    }
+
+    public KumexClientBuilder withKChartAPI(KChartAPI kChartAPI) {
+        this.kChartAPI = kChartAPI;
         return this;
     }
 

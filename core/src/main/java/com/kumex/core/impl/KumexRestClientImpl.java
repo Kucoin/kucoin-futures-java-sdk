@@ -11,9 +11,11 @@ import com.kumex.core.rest.interfaces.FillAPI;
 import com.kumex.core.rest.interfaces.FundingFeeAPI;
 import com.kumex.core.rest.interfaces.HistoryAPI;
 import com.kumex.core.rest.interfaces.IndexAPI;
+import com.kumex.core.rest.interfaces.KChartAPI;
 import com.kumex.core.rest.interfaces.OrderAPI;
 import com.kumex.core.rest.interfaces.OrderBookAPI;
 import com.kumex.core.rest.interfaces.PositionAPI;
+import com.kumex.core.rest.interfaces.ServiceStatusAPI;
 import com.kumex.core.rest.interfaces.SymbolAPI;
 import com.kumex.core.rest.interfaces.TickerAPI;
 import com.kumex.core.rest.interfaces.TimeAPI;
@@ -53,6 +55,10 @@ public class KumexRestClientImpl implements KumexRestClient {
 
     private TimeAPI timeAPI;
 
+    private ServiceStatusAPI serviceStatusAPI;
+
+    private KChartAPI kChartAPI;
+
     public KumexRestClientImpl(KumexClientBuilder kucoinBuilder) {
         this.accountAPI = kucoinBuilder.getAccountAPI();
         this.depositAPI = kucoinBuilder.getDepositAPI();
@@ -68,6 +74,8 @@ public class KumexRestClientImpl implements KumexRestClient {
         this.historyAPI = kucoinBuilder.getHistoryAPI();
         this.indexAPI = kucoinBuilder.getIndexAPI();
         this.timeAPI = kucoinBuilder.getTimeAPI();
+        this.serviceStatusAPI = kucoinBuilder.getServiceStatusAPI();
+        this.kChartAPI = kucoinBuilder.getKChartAPI();
     }
 
     @Override
@@ -138,6 +146,16 @@ public class KumexRestClientImpl implements KumexRestClient {
     @Override
     public TimeAPI timeAPI() {
         return timeAPI;
+    }
+
+    @Override
+    public ServiceStatusAPI serviceStatusAPI() {
+        return serviceStatusAPI;
+    }
+
+    @Override
+    public KChartAPI kChartAPI() {
+        return kChartAPI;
     }
 
 }

@@ -16,6 +16,7 @@ import com.kumex.core.websocket.event.AccountChangeEvent;
 import com.kumex.core.websocket.event.KucoinEvent;
 import com.kumex.core.websocket.event.PositionChangeEvent;
 import com.kumex.core.websocket.event.StopOrderActivateEvent;
+import com.kumex.core.websocket.event.StopOrderLifecycleEvent;
 import com.kumex.core.websocket.listener.KumexWebsocketListener;
 import okhttp3.OkHttpClient;
 
@@ -49,6 +50,15 @@ public class KumexPrivateWSClientImpl extends KumexPublicWSClientImpl implements
             this.getListener().getCallbackMap().put(APIConstants.API_ACTIVATE_TOPIC_PREFIX, callback);
         }
         String topic = APIConstants.API_ACTIVATE_TOPIC_PREFIX;
+        return subscribe(topic, true, true);
+    }
+
+    @Override
+    public String onStopOrderLifecycle(KumexAPICallback<KucoinEvent<StopOrderLifecycleEvent>> callback) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_LIFECYCLE_TOPIC_PREFIX, callback);
+        }
+        String topic = APIConstants.API_LIFECYCLE_TOPIC_PREFIX;
         return subscribe(topic, true, true);
     }
 

@@ -32,9 +32,9 @@ public class DepositAPIAdapter extends AuthRetrofitAPIImpl<DepositAPIRetrofit> i
     }
 
     @Override
-    public Pagination<DepositResponse> getDepositList(String status, DuringPageRequest request) throws IOException {
+    public Pagination<DepositResponse> getDepositList(String status, String currency, DuringPageRequest request) throws IOException {
         if (request == null) request = DuringPageRequest.builder().build();
         return super.executeSync(getAPIImpl().getDepositPageList(request.getCurrentPage(), request.getPageSize(), status,
-                request.getStarAt(), request.getEndAt()));
+                currency, request.getStarAt(), request.getEndAt()));
     }
 }

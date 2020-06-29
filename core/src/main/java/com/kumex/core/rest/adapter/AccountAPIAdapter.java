@@ -28,8 +28,8 @@ public class AccountAPIAdapter extends AuthRetrofitAPIImpl<AccountAPIRetrofit> i
     }
 
     @Override
-    public AccountOverviewResponse accountOverview() throws IOException {
-        return super.executeSync(getAPIImpl().accountOverview());
+    public AccountOverviewResponse accountOverview(String currency) throws IOException {
+        return super.executeSync(getAPIImpl().accountOverview(currency));
     }
 
     @Override

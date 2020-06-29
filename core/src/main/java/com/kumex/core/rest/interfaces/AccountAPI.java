@@ -24,11 +24,12 @@ public interface AccountAPI {
      *
      * This endpoint requires the General permission.
      *
+     * @param currency [Optional] Currecny ,including XBT,USDT,Default XBT
      * @return The accounts.
      * @throws IOException on socket errors.
      * @throws KumexApiException when errors are returned from the exchange.
      */
-    AccountOverviewResponse accountOverview() throws IOException;
+    AccountOverviewResponse accountOverview(String currency) throws IOException;
 
     /**
      * If there are open positions, the status of the first page returned will be Pending,

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface AccountAPIRetrofit {
 
     @GET("api/v1/account-overview")
-    Call<KumexResponse<AccountOverviewResponse>> accountOverview();
+    Call<KumexResponse<AccountOverviewResponse>> accountOverview(@Query("currency") String currency);
 
     @GET("api/v1/transaction-history")
     Call<KumexResponse<HasMoreResponse<TransactionHistory>>> transactionHistory(@Query("startAt") Long startAt,

@@ -23,6 +23,7 @@ public interface DepositAPIRetrofit {
     Call<KumexResponse<Pagination<DepositResponse>>> getDepositPageList(@Query("currentPage") int currentPage,
                                                                         @Query("pageSize") int pageSize,
                                                                         @Query("status") String status,
+                                                                        @Query("currency") String currency,
                                                                         @Query("startAt") Long startAt,
                                                                         @Query("endAt") Long endAt);
 }

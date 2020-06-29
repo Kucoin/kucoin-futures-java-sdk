@@ -47,9 +47,9 @@ public interface WithdrawalAPI {
      * get withdrawals list
      *
      * @param status      [optional] Status. Available value: PROCESSING, WALLET_PROCESSING, SUCCESS, and FAILURE
-     * @param request     [optional] include startAt endAt currentPage and pageSize parameters
-     * @return A page of withdrawals.
+     * @param currency    [optional] Currency, including XBT,USDT
+     *@param request      [optional] include startAt endAt currentPage and pageSize parameters  @return A page of withdrawals.
      */
-    Pagination<WithdrawResponse> getWithdrawList(String status, DuringPageRequest request) throws IOException;
+    Pagination<WithdrawResponse> getWithdrawList(String status, String currency, DuringPageRequest request) throws IOException;
 
 }

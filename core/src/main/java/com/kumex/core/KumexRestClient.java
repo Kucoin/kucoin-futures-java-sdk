@@ -9,9 +9,11 @@ import com.kumex.core.rest.interfaces.FillAPI;
 import com.kumex.core.rest.interfaces.FundingFeeAPI;
 import com.kumex.core.rest.interfaces.HistoryAPI;
 import com.kumex.core.rest.interfaces.IndexAPI;
+import com.kumex.core.rest.interfaces.KChartAPI;
 import com.kumex.core.rest.interfaces.OrderAPI;
 import com.kumex.core.rest.interfaces.OrderBookAPI;
 import com.kumex.core.rest.interfaces.PositionAPI;
+import com.kumex.core.rest.interfaces.ServiceStatusAPI;
 import com.kumex.core.rest.interfaces.SymbolAPI;
 import com.kumex.core.rest.interfaces.TickerAPI;
 import com.kumex.core.rest.interfaces.TimeAPI;
@@ -50,5 +52,9 @@ public interface KumexRestClient {
     IndexAPI indexAPI();
 
     TimeAPI timeAPI();
+
+    ServiceStatusAPI serviceStatusAPI();
+
+    KChartAPI kChartAPI();
 
 }

@@ -31,4 +31,6 @@ public class AccountOverviewResponse {
 
     private BigDecimal availableBalance;
 
+    private String currency;
+
 }

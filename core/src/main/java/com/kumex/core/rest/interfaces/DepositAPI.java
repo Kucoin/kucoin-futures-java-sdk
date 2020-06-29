@@ -31,9 +31,10 @@ public interface DepositAPI {
      * Get deposit page list.
      *
      * @param status      [optional] Status. Available value: PROCESSING, SUCCESS, and FAILURE
+     * @param currency    [Optional] Currency, including XBT,USDT
      * @param request     [optional] include startAt endAt currentPage and pageSize parameters
      * @return A page of deposits.
      */
-    Pagination<DepositResponse> getDepositList(String status, DuringPageRequest request) throws IOException;
+    Pagination<DepositResponse> getDepositList(String status, String currency, DuringPageRequest request) throws IOException;
 
 }

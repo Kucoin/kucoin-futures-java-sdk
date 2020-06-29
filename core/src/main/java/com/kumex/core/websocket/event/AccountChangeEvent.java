@@ -21,6 +21,8 @@ public class AccountChangeEvent {
 
     private BigDecimal withdrawHold;
 
+    private String currency;
+
     private long timestamp;
 
 }
