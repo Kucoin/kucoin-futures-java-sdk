@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kumex</groupId>
-    <artifactId>kumex-java-sdk</artifactId>
+    <groupId>com.kucoin.futures</groupId>
+    <artifactId>kucoin-futures-java-sdk</artifactId>
     <packaging>pom</packaging>
     <version>1.1.1</version>
 
-    <name>kumex-java-sdk</name>
-    <url>http://www.kumex.com</url>
+    <name>kucoin-futures-java-sdk</name>
+    <url>http://futures.kucoin.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,7 +77,7 @@
             </dependency>
 
             <dependency>
-                <groupId>com.kumex</groupId>
+                <groupId>com.kucoin.futures</groupId>
                 <artifactId>core</artifactId>
             </dependency>
         </dependencies>
