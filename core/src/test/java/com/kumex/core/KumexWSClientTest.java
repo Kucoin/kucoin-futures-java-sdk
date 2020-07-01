@@ -14,9 +14,11 @@ import com.kumex.core.websocket.event.AccountChangeEvent;
 import com.kumex.core.websocket.event.ContractMarketEvent;
 import com.kumex.core.websocket.event.ExecutionChangeEvent;
 import com.kumex.core.websocket.event.Level2ChangeEvent;
+import com.kumex.core.websocket.event.Level2OrderBookEvent;
 import com.kumex.core.websocket.event.Level3ChangeEvent;
+import com.kumex.core.websocket.event.Level3ChangeEventV2;
 import com.kumex.core.websocket.event.PositionChangeEvent;
-import com.kumex.core.websocket.event.StopOrderActivateEvent;
+import com.kumex.core.websocket.event.StopOrderLifecycleEvent;
 import com.kumex.core.websocket.event.TransactionStatisticEvent;
 import org.hamcrest.core.Is;
 import org.junit.AfterClass;
@@ -63,11 +65,11 @@ public class KumexWSClientTest {
     }
 
     @Test
-    public void onOrderActivate() throws Exception {
-        AtomicReference<StopOrderActivateEvent> event = new AtomicReference<>();
+    public void onStopOrderLifecycle() throws Exception {
+        AtomicReference<StopOrderLifecycleEvent> event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
 
-        kumexPrivateWSClient.onStopOrderActivate(response -> {
+        kumexPrivateWSClient.onStopOrderLifecycle(response -> {
             event.set(response.getData());
             kumexPrivateWSClient.unsubscribe(PrivateChannelEnum.STOP_ORDER, SYMBOL);
             gotEvent.countDown();
@@ -153,11 +155,25 @@ public class KumexWSClientTest {
     @Test
     public void onLevel2Data() throws Exception {
         AtomicReference<Level2ChangeEvent> event = new AtomicReference<>();
-        CountDownLatch gotEvent = new CountDownLatch(1);
+        AtomicReference<Level2OrderBookEvent> depth5Event = new AtomicReference<>();
+        AtomicReference<Level2OrderBookEvent> depth50Event = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(3);
 
         kumexPrivateWSClient.onLevel2Data(response -> {
             event.set(response.getData());
             kumexPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2, SYMBOL);
+            gotEvent.countDown();
+        }, SYMBOL);
+
+        kumexPrivateWSClient.onLevel2Depth5Data(response -> {
+            depth5Event.set(response.getData());
+            kumexPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_5, SYMBOL);
+            gotEvent.countDown();
+        }, SYMBOL);
+
+        kumexPrivateWSClient.onLevel2Depth50Data(response -> {
+            depth50Event.set(response.getData());
+            kumexPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_50, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
@@ -166,6 +182,8 @@ public class KumexWSClientTest {
 
         assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
         assertThat(event.get(), notNullValue());
+        assertThat(depth5Event.get(), notNullValue());
+        assertThat(depth50Event.get(), notNullValue());
     }
 
     @Test
@@ -189,6 +207,7 @@ public class KumexWSClientTest {
     @Test
     public void onLevel3Data() throws Exception {
         AtomicReference<Level3ChangeEvent> event = new AtomicReference<>();
+        AtomicReference<Level3ChangeEventV2> v2Event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
 
         kumexPrivateWSClient.onLevel3Data(response -> {
@@ -197,11 +216,18 @@ public class KumexWSClientTest {
             gotEvent.countDown();
         }, SYMBOL);
 
+        kumexPrivateWSClient.onLevel3DataV2(response -> {
+            v2Event.set(response.getData());
+            kumexPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL3_V2, SYMBOL);
+            gotEvent.countDown();
+        }, SYMBOL);
+
         // Trigger a market change
         placeOrderAndCancelOrder();
 
         assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
         assertThat(event.get(), notNullValue());
+        assertThat(v2Event.get(), notNullValue());
     }
 
     @Test

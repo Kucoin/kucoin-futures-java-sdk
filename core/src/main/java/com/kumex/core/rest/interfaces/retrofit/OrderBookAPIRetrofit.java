@@ -22,6 +22,7 @@ public interface OrderBookAPIRetrofit {
     Call<KumexResponse<OrderBookResponse>> getFullLevel2OrderBook(@Query("symbol") String symbol);
 
     @GET("api/v1/level2/message/query")
+    @Deprecated
     Call<KumexResponse<List<Level2Message>>> getLevel2PullingMessages(@Query("symbol") String symbol,
                                                                       @Query("start") long start,
                                                                       @Query("end") long end);
@@ -29,7 +30,11 @@ public interface OrderBookAPIRetrofit {
     @GET("api/v1/level3/snapshot")
     Call<KumexResponse<OrderBookResponse>> getFullLevel3OrderBook(@Query("symbol") String symbol);
 
+    @GET("api/v2/level3/snapshot")
+    Call<KumexResponse<OrderBookResponse>> getFullLevel3OrderBookV2(@Query("symbol") String symbol);
+
     @GET("api/v1/level3/message/query")
+    @Deprecated
     Call<KumexResponse<List<Level3Message>>> getLevel3PullingMessages(@Query("symbol") String symbol,
                                                                       @Query("start") long start,
                                                                       @Query("end") long end);

@@ -65,6 +65,12 @@ public class ContractResponse {
 
     private String indexSymbol;
 
+    private BigDecimal volumeOf24h;
+
+    private BigDecimal turnoverOf24h;
+
+    private Long openInterest;
+
     private String status;
 
     private BigDecimal maxLeverage;

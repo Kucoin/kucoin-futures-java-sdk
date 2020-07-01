@@ -11,7 +11,9 @@ import com.kumex.core.websocket.event.ContractMarketEvent;
 import com.kumex.core.websocket.event.ExecutionChangeEvent;
 import com.kumex.core.websocket.event.KucoinEvent;
 import com.kumex.core.websocket.event.Level2ChangeEvent;
+import com.kumex.core.websocket.event.Level2OrderBookEvent;
 import com.kumex.core.websocket.event.Level3ChangeEvent;
+import com.kumex.core.websocket.event.Level3ChangeEventV2;
 import com.kumex.core.websocket.event.TickerChangeEvent;
 import com.kumex.core.websocket.event.TransactionStatisticEvent;
 
@@ -45,6 +47,26 @@ public interface KumexPublicWSClient {
     String onLevel2Data(KumexAPICallback<KucoinEvent<Level2ChangeEvent>> callback, String... symbols);
 
     /**
+     * Subscribe this topic to get Level 2 order book data.
+     * The websocket system will send the incremental feed to you.
+     *
+     * @param callback
+     * @param symbols
+     * @return
+     */
+    String onLevel2Depth5Data(KumexAPICallback<KucoinEvent<Level2OrderBookEvent>> callback, String... symbols);
+
+    /**
+     * Subscribe this topic to get Level 2 order book data.
+     * The websocket system will send the incremental feed to you.
+     *
+     * @param callback
+     * @param symbols
+     * @return
+     */
+    String onLevel2Depth50Data(KumexAPICallback<KucoinEvent<Level2OrderBookEvent>> callback, String... symbols);
+
+    /**
      * For each order executed, the system will send you the match messages in the format as following.
      *
      * @param callback
@@ -64,6 +86,18 @@ public interface KumexPublicWSClient {
      * @return The subscription UUID, or null if sending failed.
      */
     String onLevel3Data(KumexAPICallback<KucoinEvent<Level3ChangeEvent>> callback, String... symbols);
+
+    /**
+     * Subsribe this topic to get the updated data for orders and trades.
+     * This channel provides real-time updates on orders and trades.
+     * These updates can be applied on to a Level 3 order book snapshot for users to
+     * maintain an accurate and up-to-date copy of the exchange order book.
+     *
+     * @param callback
+     * @param symbols
+     * @return The subscription UUID, or null if sending failed.
+     */
+    String onLevel3DataV2(KumexAPICallback<KucoinEvent<Level3ChangeEventV2>> callback, String... symbols);
 
     /**
      * Subscribe this topic to get the market data of the contract.

@@ -21,6 +21,10 @@ public class KucoinEvent<T> {
 
     private String topic;
 
+    private String subject;
+
+    private String channelType;
+
     private Boolean privateChannel;
 
     private Boolean response;

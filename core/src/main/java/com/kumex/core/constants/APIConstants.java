@@ -21,8 +21,11 @@ public class APIConstants {
 
     public static final String API_TICKER_TOPIC_PREFIX = "/contractMarket/ticker:";
     public static final String API_LEVEL2_TOPIC_PREFIX = "/contractMarket/level2:";
+    public static final String API_LEVEL2_DEPTH_5_PREFIX = "/contractMarket/level2Depth5:";
+    public static final String API_LEVEL2_DEPTH_50_PREFIX = "/contractMarket/level2Depth50:";
     public static final String API_EXECUTION_TOPIC_PREFIX = "/contractMarket/execution:";
     public static final String API_LEVEL3_TOPIC_PREFIX = "/contractMarket/level3:";
+    public static final String API_LEVEL3_V2_TOPIC_PREFIX = "/contractMarket/level3v2:";
     public static final String API_CONTRACT_TOPIC_PREFIX = "/contract/instrument:";
     public static final String API_ANNOUNCEMENT_TOPIC_PREFIX = "/contract/announcement";
     public static final String API_TRANSACTION_TOPIC_PREFIX = "/contractMarket/snapshot:";
