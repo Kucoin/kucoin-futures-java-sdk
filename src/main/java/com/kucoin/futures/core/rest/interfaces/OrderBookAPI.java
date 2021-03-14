@@ -30,6 +30,25 @@ public interface OrderBookAPI {
     OrderBookResponse getFullLevel2OrderBook(String symbol) throws IOException;
 
     /**
+     * Get a snapshot of aggregated open orders for a symbol.
+     * This API will return data with 20 depth.
+     * @param symbol
+     * @return
+     * @throws IOException
+     */
+    OrderBookResponse getDepth20Level2OrderBook(String symbol) throws IOException;
+
+    /**
+     * Get a snapshot of aggregated open orders for a symbol.
+     * This API will return data with 100 depth.
+     * @param symbol
+     * @return
+     * @throws IOException
+     */
+    OrderBookResponse getDepth100Level2OrderBook(String symbol) throws IOException;
+
+
+    /**
      * If the messages pushed by Websocket is not continuous, you can submit the following request and re-pull the data to ensure that the sequence is not missing.
      * In the request, the start parameter is the sequence number of your last received message plus 1,
      * and the end parameter is the sequence number of your current received message minus 1.

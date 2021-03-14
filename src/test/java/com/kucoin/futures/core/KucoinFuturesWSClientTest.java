@@ -49,12 +49,12 @@ public class KucoinFuturesWSClientTest {
     private static KucoinFuturesRestClient kucoinFuturesRestClient;
     private static KucoinFuturesPrivateWSClient kucoinFuturesPrivateWSClient;
 
-    private static final String SYMBOL = "XBTUSDM";
+    private static final String SYMBOL = "XBTUSDTM";
 
     @BeforeClass
     public static void setupClass() throws Exception {
-        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.com")
-                .withApiKey("5da5345c5a78b400087f0779", "5aaa3efb-3b9a-4849-9a35-040712d7d108", "Abc123456");
+        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
+                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380");
         kucoinFuturesRestClient = builder.buildRestClient();
         kucoinFuturesPrivateWSClient = builder.buildPrivateWSClient();
         kucoinFuturesPrivateWSClient.connect();

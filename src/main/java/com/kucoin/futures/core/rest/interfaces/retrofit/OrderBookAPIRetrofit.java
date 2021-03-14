@@ -21,6 +21,12 @@ public interface OrderBookAPIRetrofit {
     @GET("api/v1/level2/snapshot")
     Call<KucoinFuturesResponse<OrderBookResponse>> getFullLevel2OrderBook(@Query("symbol") String symbol);
 
+    @GET("api/v1/level2/depth20")
+    Call<KucoinFuturesResponse<OrderBookResponse>> getDepth20Level2OrderBook(@Query("symbol") String symbol);
+
+    @GET("api/v1/level2/depth100")
+    Call<KucoinFuturesResponse<OrderBookResponse>> getDepth100Level2OrderBook(@Query("symbol") String symbol);
+
     @GET("api/v1/level2/message/query")
     @Deprecated
     Call<KucoinFuturesResponse<List<Level2Message>>> getLevel2PullingMessages(@Query("symbol") String symbol,

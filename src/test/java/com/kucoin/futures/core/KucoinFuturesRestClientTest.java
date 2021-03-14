@@ -53,7 +53,7 @@ import static org.hamcrest.junit.MatcherAssert.assertThat;
  * Created by chenshiwei on 2019/1/21.
  */
 public class KucoinFuturesRestClientTest {
-    private static KucoinFuturesRestClient sandboxKucoinFuturesRestClient;
+    private static KucoinFuturesRestClient futuresRestClient;
 
     private static Long startAt;
     private static Long endAt;
@@ -61,15 +61,15 @@ public class KucoinFuturesRestClientTest {
     private static DuringPageRequest pageRequest;
     private static DuringHasMoreRequest hasMoreRequest;
 
-    private final static String SYMBOL = "XBTUSDM";
+    private final static String SYMBOL = "XBTUSDTM";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @BeforeClass
     public static void setUpClass() {
-        sandboxKucoinFuturesRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.com")
-                .withApiKey("5da5345c5a78b400087f0779", "5aaa3efb-3b9a-4849-9a35-040712d7d108", "Abc123456")
+        futuresRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
+                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380")
                 .buildRestClient();
         startAt = LocalDateTime.of(2019, 9, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
         endAt = LocalDateTime.of(2019, 10, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
@@ -79,10 +79,10 @@ public class KucoinFuturesRestClientTest {
 
     @Test
     public void accountAPI() throws Exception {
-        AccountOverviewResponse accountOverviewResponse = sandboxKucoinFuturesRestClient.accountAPI().accountOverview(null);
+        AccountOverviewResponse accountOverviewResponse = futuresRestClient.accountAPI().accountOverview(null);
         assertThat(accountOverviewResponse, notNullValue());
 
-        HasMoreResponse<TransactionHistory> transactionHistoryHasMoreResponse = sandboxKucoinFuturesRestClient.accountAPI()
+        HasMoreResponse<TransactionHistory> transactionHistoryHasMoreResponse = futuresRestClient.accountAPI()
                 .transactionHistory(null, null, null);
         assertThat(transactionHistoryHasMoreResponse, notNullValue());
         assertThat(transactionHistoryHasMoreResponse.isHasMore(), Is.is(false));
@@ -94,42 +94,42 @@ public class KucoinFuturesRestClientTest {
 
         exception.expect(KucoinFuturesApiException.class);
         exception.expectMessage("Sandbox environment cannot get deposit address");
-        sandboxKucoinFuturesRestClient.depositAPI().getDepositAddress("XBT");
+        futuresRestClient.depositAPI().getDepositAddress("XBT");
 
         exception.expect(KucoinFuturesApiException.class);
         exception.expectMessage("Sandbox environment cannot get deposit address");
-        sandboxKucoinFuturesRestClient.depositAPI().getDepositList("SUCCESS", null, pageRequest);
+        futuresRestClient.depositAPI().getDepositList("SUCCESS", null, pageRequest);
     }
 
     @Test
     @Ignore
     public void withdrawalAPI() throws Exception {
-        Pagination<WithdrawResponse> withdrawList = sandboxKucoinFuturesRestClient.withdrawalAPI()
+        Pagination<WithdrawResponse> withdrawList = futuresRestClient.withdrawalAPI()
                 .getWithdrawList("FAILURE", null, null);
         assertThat(withdrawList, notNullValue());
 
-        WithdrawQuotaResponse kcs = sandboxKucoinFuturesRestClient.withdrawalAPI().getWithdrawQuotas("XBT");
+        WithdrawQuotaResponse kcs = futuresRestClient.withdrawalAPI().getWithdrawQuotas("XBT");
         assertThat(kcs, notNullValue());
 
         exception.expect(KucoinFuturesApiException.class);
         exception.expectMessage("Sandbox environment cannot be withdrawn");
         WithdrawApplyRequest withdrawApplyRequest = WithdrawApplyRequest.builder().address("123467")
                 .amount(BigDecimal.valueOf(0.00000001)).currency("XBT").build();
-        sandboxKucoinFuturesRestClient.withdrawalAPI().withdrawFunds(withdrawApplyRequest);
+        futuresRestClient.withdrawalAPI().withdrawFunds(withdrawApplyRequest);
 
-        sandboxKucoinFuturesRestClient.withdrawalAPI().cancelWithdraw("1234567");
+        futuresRestClient.withdrawalAPI().cancelWithdraw("1234567");
     }
 
     @Test
     @Ignore
     public void transferAPI() throws Exception {
-        Pagination<TransferHistory> records = sandboxKucoinFuturesRestClient.transferAPI().getTransferOutRecords("SUCCESS", null, pageRequest);
+        Pagination<TransferHistory> records = futuresRestClient.transferAPI().getTransferOutRecords("SUCCESS", null, pageRequest);
         assertThat(records.getItems().size(), is(0));
 
-        TransferResponse transferResponse = sandboxKucoinFuturesRestClient.transferAPI().toKucoinMainAccount("123456", BigDecimal.valueOf(0.00000001));
+        TransferResponse transferResponse = futuresRestClient.transferAPI().toKucoinMainAccount("123456", BigDecimal.valueOf(0.00000001));
         assertThat(transferResponse.getApplyId(), notNullValue());
 
-        sandboxKucoinFuturesRestClient.transferAPI().cancelTransferOutRequest(transferResponse.getApplyId());
+        futuresRestClient.transferAPI().cancelTransferOutRequest(transferResponse.getApplyId());
     }
 
     @Test
@@ -137,101 +137,107 @@ public class KucoinFuturesRestClientTest {
         OrderCreateResponse order = placeCannotDealLimitOrder();
         assertThat(order, notNullValue());
 
-        OrderResponse orderDetail = sandboxKucoinFuturesRestClient.orderAPI().getOrderDetail(order.getOrderId());
+        OrderResponse orderDetail = futuresRestClient.orderAPI().getOrderDetail(order.getOrderId());
         assertThat(orderDetail, notNullValue());
 
-        OrderCancelResponse orderCancelResponse = sandboxKucoinFuturesRestClient.orderAPI().cancelOrder(order.getOrderId());
+        OrderCancelResponse orderCancelResponse = futuresRestClient.orderAPI().cancelOrder(order.getOrderId());
         assertThat(orderCancelResponse.getCancelledOrderIds().size(), is(1));
 
         placeCannotDealLimitOrder();
-        OrderCancelResponse cancelAllLimitOrders = sandboxKucoinFuturesRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
+        OrderCancelResponse cancelAllLimitOrders = futuresRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
         assertThat(cancelAllLimitOrders.getCancelledOrderIds().size(), greaterThan(0));
 
         placeCannotTriggerStopOrder();
-        Pagination<OrderResponse> stopOrderList = sandboxKucoinFuturesRestClient.orderAPI().getUntriggeredStopOrderList(SYMBOL,
+        Pagination<OrderResponse> stopOrderList = futuresRestClient.orderAPI().getUntriggeredStopOrderList(SYMBOL,
                 "buy", "limit", pageRequest);
         assertThat(stopOrderList.getItems().size(), greaterThan(0));
 
-        OrderCancelResponse cancelAllStopOrders = sandboxKucoinFuturesRestClient.orderAPI().cancelAllStopOrders(SYMBOL);
+        OrderCancelResponse cancelAllStopOrders = futuresRestClient.orderAPI().cancelAllStopOrders(SYMBOL);
         assertThat(cancelAllStopOrders.getCancelledOrderIds().size(), greaterThan(0));
 
-        Pagination<OrderResponse> orderList = sandboxKucoinFuturesRestClient.orderAPI().getOrderList(SYMBOL, "buy",
+        Pagination<OrderResponse> orderList = futuresRestClient.orderAPI().getOrderList(SYMBOL, "buy",
                 "limit", "done", null);
         assertThat(orderList.getItems().size(), greaterThan(0));
 
-        List<OrderResponse> recentDoneOrders = sandboxKucoinFuturesRestClient.orderAPI().getRecentDoneOrders();
+        List<OrderResponse> recentDoneOrders = futuresRestClient.orderAPI().getRecentDoneOrders();
         assertThat(recentDoneOrders.size(), greaterThan(0));
 
     }
 
     @Test
     public void fillAPI() throws Exception {
-        Pagination<FillResponse> fills = sandboxKucoinFuturesRestClient.fillAPI().getFills(null, null, null,
+        Pagination<FillResponse> fills = futuresRestClient.fillAPI().getFills(null, null, null,
                 null, null);
         assertThat(fills, notNullValue());
 
-        List<FillResponse> fillResponses = sandboxKucoinFuturesRestClient.fillAPI().recentFills();
+        List<FillResponse> fillResponses = futuresRestClient.fillAPI().recentFills();
         assertThat(fillResponses, notNullValue());
 
-        ActiveOrderResponse xbtusdm = sandboxKucoinFuturesRestClient.fillAPI().calActiveOrderValue(SYMBOL);
+        ActiveOrderResponse xbtusdm = futuresRestClient.fillAPI().calActiveOrderValue(SYMBOL);
         assertThat(xbtusdm, notNullValue());
     }
 
     @Test
     public void positionAPI() throws Exception {
-        PositionResponse position = sandboxKucoinFuturesRestClient.positionAPI().getPosition(SYMBOL);
+        PositionResponse position = futuresRestClient.positionAPI().getPosition(SYMBOL);
         assertThat(position, notNullValue());
 
-        List<PositionResponse> positions = sandboxKucoinFuturesRestClient.positionAPI().getPositions();
+        List<PositionResponse> positions = futuresRestClient.positionAPI().getPositions();
         assertThat(positions, notNullValue());
 
         if (!positions.isEmpty()) {
-            sandboxKucoinFuturesRestClient.positionAPI().setAutoDepositMargin(SYMBOL, true);
-            sandboxKucoinFuturesRestClient.positionAPI().addMarginManually(SYMBOL, BigDecimal.valueOf(0.000001), "123456");
+            futuresRestClient.positionAPI().setAutoDepositMargin(SYMBOL, true);
+            futuresRestClient.positionAPI().addMarginManually(SYMBOL, BigDecimal.valueOf(0.000001), "123456");
         }
 
     }
 
     @Test
     public void fundingFeeAPI() throws Exception {
-        HasMoreResponse<FundingHistoryResponse> fundingHistory = sandboxKucoinFuturesRestClient.fundingFeeAPI()
+        HasMoreResponse<FundingHistoryResponse> fundingHistory = futuresRestClient.fundingFeeAPI()
                 .getFundingHistory(SYMBOL, null, null, hasMoreRequest);
         assertThat(fundingHistory, notNullValue());
     }
 
     @Test
     public void symbolAPI() throws Exception {
-        ContractResponse contract = sandboxKucoinFuturesRestClient.symbolAPI().getContract(SYMBOL);
+        ContractResponse contract = futuresRestClient.symbolAPI().getContract(SYMBOL);
         assertThat(contract, notNullValue());
 
-        List<ContractResponse> openContractList = sandboxKucoinFuturesRestClient.symbolAPI().getOpenContractList();
+        List<ContractResponse> openContractList = futuresRestClient.symbolAPI().getOpenContractList();
         assertThat(openContractList.size(), greaterThan(0));
     }
 
     @Test
     public void tickerAPI() throws Exception {
-        TickerResponse ticker = sandboxKucoinFuturesRestClient.tickerAPI().getTicker(SYMBOL);
+        TickerResponse ticker = futuresRestClient.tickerAPI().getTicker(SYMBOL);
         assertThat(ticker, notNullValue());
     }
 
     @Test
     public void orderBookAPI() throws Exception {
-        OrderBookResponse fullOrderBookAggregated = sandboxKucoinFuturesRestClient.orderBookAPI().getFullLevel2OrderBook(SYMBOL);
+        OrderBookResponse fullOrderBookAggregated = futuresRestClient.orderBookAPI().getFullLevel2OrderBook(SYMBOL);
         assertThat(fullOrderBookAggregated, notNullValue());
 
-        OrderBookResponse fullOrderBookAtomic = sandboxKucoinFuturesRestClient.orderBookAPI().getFullLevel3OrderBook(SYMBOL);
+//        OrderBookResponse orderBook20 = futuresRestClient.orderBookAPI().getDepth20Level2OrderBook(SYMBOL);
+//        assertThat(orderBook20, notNullValue());
+
+        OrderBookResponse orderBook100 = futuresRestClient.orderBookAPI().getDepth100Level2OrderBook(SYMBOL);
+        assertThat(orderBook100, notNullValue());
+
+        OrderBookResponse fullOrderBookAtomic = futuresRestClient.orderBookAPI().getFullLevel3OrderBook(SYMBOL);
         assertThat(fullOrderBookAtomic, notNullValue());
     }
 
     @Test
     public void historyAPI() throws Exception {
-        List<TransactionHistoryResponse> transactionHistories = sandboxKucoinFuturesRestClient.historyAPI().getTransactionHistories(SYMBOL);
+        List<TransactionHistoryResponse> transactionHistories = futuresRestClient.historyAPI().getTransactionHistories(SYMBOL);
         assertThat(transactionHistories.size(), greaterThan(0));
     }
 
     @Test
     public void indexAPI() throws Exception {
-        HasMoreResponse<InterestRateResponse> interestRateList = sandboxKucoinFuturesRestClient.indexAPI()
+        HasMoreResponse<InterestRateResponse> interestRateList = futuresRestClient.indexAPI()
                 .getInterestRateList(SYMBOL, null, null, hasMoreRequest);
         assertThat(interestRateList, notNullValue());
     }
@@ -239,19 +245,19 @@ public class KucoinFuturesRestClientTest {
     @Test
     @Ignore
     public void serviceStatusAPI() throws Exception {
-        ServiceStatusResponse serviceStatus = sandboxKucoinFuturesRestClient.serviceStatusAPI().getServiceStatus();
+        ServiceStatusResponse serviceStatus = futuresRestClient.serviceStatusAPI().getServiceStatus();
         assertThat(serviceStatus, notNullValue());
     }
 
     @Test
     public void kChartAPI() throws Exception {
-        List<List<String>> kChart = sandboxKucoinFuturesRestClient.kChartAPI().getKChart(SYMBOL, 60, null, null);
+        List<List<String>> kChart = futuresRestClient.kChartAPI().getKChart(SYMBOL, 60, null, null);
         assertThat(kChart, notNullValue());
     }
 
     @Test
     public void timeAPI() throws Exception {
-        Long serverTimeStamp = sandboxKucoinFuturesRestClient.timeAPI().getServerTimeStamp();
+        Long serverTimeStamp = futuresRestClient.timeAPI().getServerTimeStamp();
         assertThat(System.currentTimeMillis() - serverTimeStamp, lessThanOrEqualTo(5000L));
     }
 
@@ -259,7 +265,7 @@ public class KucoinFuturesRestClientTest {
         OrderCreateApiRequest pageRequest = OrderCreateApiRequest.builder()
                 .price(BigDecimal.valueOf(1000)).size(BigDecimal.ONE).side("buy").leverage("5")
                 .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
-        return sandboxKucoinFuturesRestClient.orderAPI().createOrder(pageRequest);
+        return futuresRestClient.orderAPI().createOrder(pageRequest);
     }
 
     private OrderCreateResponse placeCannotTriggerStopOrder() throws IOException {
@@ -267,7 +273,7 @@ public class KucoinFuturesRestClientTest {
                 .stop("down").stopPriceType("MP").stopPrice(BigDecimal.valueOf(1000))
                 .price(BigDecimal.valueOf(1000)).size(BigDecimal.ONE).side("buy").leverage("5")
                 .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
-        return sandboxKucoinFuturesRestClient.orderAPI().createOrder(pageRequest);
+        return futuresRestClient.orderAPI().createOrder(pageRequest);
     }
 
 }

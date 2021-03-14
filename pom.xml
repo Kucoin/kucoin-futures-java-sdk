@@ -6,7 +6,6 @@
 
     <groupId>com.kucoin.futures</groupId>
     <artifactId>kucoin-futures-java-sdk</artifactId>
-    <packaging>pom</packaging>
     <version>1.2.0</version>
 
     <name>kucoin-futures-java-sdk</name>

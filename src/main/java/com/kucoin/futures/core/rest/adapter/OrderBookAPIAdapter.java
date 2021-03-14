@@ -28,6 +28,16 @@ public class OrderBookAPIAdapter extends PublicRetrofitAPIImpl<OrderBookAPIRetro
     }
 
     @Override
+    public OrderBookResponse getDepth20Level2OrderBook(String symbol) throws IOException {
+        return super.executeSync(getAPIImpl().getDepth20Level2OrderBook(symbol));
+    }
+
+    @Override
+    public OrderBookResponse getDepth100Level2OrderBook(String symbol) throws IOException {
+        return super.executeSync(getAPIImpl().getDepth100Level2OrderBook(symbol));
+    }
+
+    @Override
     public List<Level2Message> getLevel2PullingMessages(String symbol, long start, long end) throws IOException {
         return super.executeSync(getAPIImpl().getLevel2PullingMessages(symbol, start, end));
     }
