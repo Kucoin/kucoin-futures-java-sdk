@@ -44,26 +44,8 @@ import static org.junit.Assert.assertTrue;
  * @email casocroz@gmail.com
  * @date 2019/10/21
  */
-public class KucoinFuturesWSClientTest {
+public class KucoinFuturesWSClientTest extends BaseTest {
 
-    private static KucoinFuturesRestClient kucoinFuturesRestClient;
-    private static KucoinFuturesPrivateWSClient kucoinFuturesPrivateWSClient;
-
-    private static final String SYMBOL = "XBTUSDTM";
-
-    @BeforeClass
-    public static void setupClass() throws Exception {
-        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
-                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380");
-        kucoinFuturesRestClient = builder.buildRestClient();
-        kucoinFuturesPrivateWSClient = builder.buildPrivateWSClient();
-        kucoinFuturesPrivateWSClient.connect();
-    }
-
-    @AfterClass
-    public static void afterClass() throws Exception {
-        kucoinFuturesPrivateWSClient.close();
-    }
 
     @Test
     public void onStopOrderLifecycle() throws Exception {
@@ -76,7 +58,7 @@ public class KucoinFuturesWSClientTest {
             gotEvent.countDown();
         });
 
-        MarkPriceResponse currentMarkPrice = kucoinFuturesRestClient.indexAPI().getCurrentMarkPrice(SYMBOL);
+        MarkPriceResponse currentMarkPrice = futuresRestClient.indexAPI().getCurrentMarkPrice(SYMBOL);
         BigDecimal marketPrice = currentMarkPrice.getValue();
 
         placeStopOrder(marketPrice.add(new BigDecimal("0.05")), "up");
@@ -87,8 +69,8 @@ public class KucoinFuturesWSClientTest {
         placeStopOrder(marketPrice.subtract(new BigDecimal("0.5")), "down");
 
         boolean await = gotEvent.await(20, TimeUnit.SECONDS);
-        kucoinFuturesRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
-        kucoinFuturesRestClient.orderAPI().cancelAllStopOrders(SYMBOL);
+        futuresRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
+        futuresRestClient.orderAPI().cancelAllStopOrders(SYMBOL);
 
         assertTrue(await);
         assertThat(event.get(), notNullValue());
@@ -267,8 +249,8 @@ public class KucoinFuturesWSClientTest {
         OrderCreateApiRequest request = OrderCreateApiRequest.builder()
                 .price(BigDecimal.valueOf(1000)).size(BigDecimal.ONE).side("buy").leverage("5")
                 .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
-        OrderCreateResponse order = kucoinFuturesRestClient.orderAPI().createOrder(request);
-        kucoinFuturesRestClient.orderAPI().cancelOrder(order.getOrderId());
+        OrderCreateResponse order = futuresRestClient.orderAPI().createOrder(request);
+        futuresRestClient.orderAPI().cancelOrder(order.getOrderId());
     }
 
     private void buyAndSell() throws InterruptedException, IOException {
@@ -281,7 +263,7 @@ public class KucoinFuturesWSClientTest {
                 .leverage("5")
                 .clientOid(UUID.randomUUID().toString())
                 .build();
-        kucoinFuturesRestClient.orderAPI().createOrder(request1);
+        futuresRestClient.orderAPI().createOrder(request1);
         OrderCreateApiRequest request2 = OrderCreateApiRequest.builder()
                 .size(BigDecimal.ONE)
                 .side("sell")
@@ -290,7 +272,7 @@ public class KucoinFuturesWSClientTest {
                 .leverage("5")
                 .clientOid(UUID.randomUUID().toString())
                 .build();
-        kucoinFuturesRestClient.orderAPI().createOrder(request2);
+        futuresRestClient.orderAPI().createOrder(request2);
     }
 
     private OrderCreateResponse placeStopOrder(BigDecimal stopPrice, String stop) throws IOException {
@@ -298,6 +280,6 @@ public class KucoinFuturesWSClientTest {
                 .stop(stop).stopPriceType("MP").stopPrice(stopPrice)
                 .price(BigDecimal.valueOf(1000)).size(BigDecimal.ONE).side("buy").leverage("5")
                 .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
-        return kucoinFuturesRestClient.orderAPI().createOrder(pageRequest);
+        return futuresRestClient.orderAPI().createOrder(pageRequest);
     }
 }

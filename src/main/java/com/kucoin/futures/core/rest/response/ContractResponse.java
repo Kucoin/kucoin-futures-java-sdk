@@ -79,4 +79,12 @@ public class ContractResponse {
 
     private BigDecimal maxLeverage;
 
+    private BigDecimal lowPrice;
+
+    private BigDecimal highPrice;
+
+    private BigDecimal priceChgPct;
+
+    private BigDecimal priceChg;
+
 }

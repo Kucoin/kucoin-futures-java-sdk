@@ -52,30 +52,24 @@ import static org.hamcrest.junit.MatcherAssert.assertThat;
 /**
  * Created by chenshiwei on 2019/1/21.
  */
-public class KucoinFuturesRestClientTest {
-    private static KucoinFuturesRestClient futuresRestClient;
+public class KucoinFuturesRestClientTest extends BaseTest {
 
-    private static Long startAt;
-    private static Long endAt;
-
-    private static DuringPageRequest pageRequest;
-    private static DuringHasMoreRequest hasMoreRequest;
-
-    private final static String SYMBOL = "XBTUSDTM";
+//    private static DuringPageRequest pageRequest;
+//    private static DuringHasMoreRequest hasMoreRequest;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    @BeforeClass
-    public static void setUpClass() {
-        futuresRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
-                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380")
-                .buildRestClient();
-        startAt = LocalDateTime.of(2019, 9, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
-        endAt = LocalDateTime.of(2019, 10, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
-        pageRequest = DuringPageRequest.builder().starAt(startAt).endAt(endAt).currentPage(1).pageSize(10).build();
-        hasMoreRequest = DuringHasMoreRequest.builder().starAt(startAt).endAt(endAt).offset(0).maxCount(10).build();
-    }
+//    @BeforeClass
+//    public static void setUpClass() {
+//        futuresRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
+//                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380")
+//                .buildRestClient();
+//        startAt = LocalDateTime.of(2019, 9, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
+//        endAt = LocalDateTime.of(2019, 10, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
+//        pageRequest = DuringPageRequest.builder().starAt(startAt).endAt(endAt).currentPage(1).pageSize(10).build();
+//        hasMoreRequest = DuringHasMoreRequest.builder().starAt(startAt).endAt(endAt).offset(0).maxCount(10).build();
+//    }
 
     @Test
     public void accountAPI() throws Exception {
