@@ -22,6 +22,7 @@ import com.kucoin.futures.core.rest.adapter.TickerAPIAdaptor;
 import com.kucoin.futures.core.rest.adapter.TimeAPIAdapter;
 import com.kucoin.futures.core.rest.adapter.TransferAPIAdapter;
 import com.kucoin.futures.core.rest.adapter.WithdrawalAPIAdapter;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.DepositAPI;
 import com.kucoin.futures.core.rest.interfaces.FillAPI;
 import com.kucoin.futures.core.rest.interfaces.FundingFeeAPI;
@@ -52,11 +53,7 @@ import java.io.IOException;
 @Getter
 public class KucoinFuturesClientBuilder {
 
-    private String apiKey;
-
-    private String secret;
-
-    private String passPhrase;
+    private FuturesApiKey apiKey;
 
     private String baseUrl;
 
@@ -96,14 +93,14 @@ public class KucoinFuturesClientBuilder {
 
     public KucoinFuturesRestClient buildRestClient() {
         if (StringUtils.isBlank(baseUrl)) baseUrl = APIConstants.API_BASE_URL;
-        if (accountAPI == null) accountAPI = new AccountAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (depositAPI == null) depositAPI = new DepositAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (withdrawalAPI == null) withdrawalAPI = new WithdrawalAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (transferAPI == null) transferAPI = new TransferAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (fillAPI == null) fillAPI = new FillAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (positionAPI == null) positionAPI = new PositionAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (fundingFeeAPI == null) fundingFeeAPI = new FundingFeeAPIAdapter(baseUrl, apiKey, secret, passPhrase);
-        if (orderAPI == null) orderAPI = new OrderAPIAdapter(baseUrl, apiKey, secret, passPhrase);
+        if (accountAPI == null) accountAPI = new AccountAPIAdapter(baseUrl, apiKey);
+        if (depositAPI == null) depositAPI = new DepositAPIAdapter(baseUrl, apiKey);
+        if (withdrawalAPI == null) withdrawalAPI = new WithdrawalAPIAdapter(baseUrl, apiKey);
+        if (transferAPI == null) transferAPI = new TransferAPIAdapter(baseUrl, apiKey);
+        if (fillAPI == null) fillAPI = new FillAPIAdapter(baseUrl, apiKey);
+        if (positionAPI == null) positionAPI = new PositionAPIAdapter(baseUrl, apiKey);
+        if (fundingFeeAPI == null) fundingFeeAPI = new FundingFeeAPIAdapter(baseUrl, apiKey);
+        if (orderAPI == null) orderAPI = new OrderAPIAdapter(baseUrl, apiKey);
         if (symbolAPI == null) symbolAPI = new SymbolAPIAdaptor(baseUrl);
         if (tickerAPI == null) tickerAPI = new TickerAPIAdaptor(baseUrl);
         if (orderBookAPI == null) orderBookAPI = new OrderBookAPIAdapter(baseUrl);
@@ -129,10 +126,14 @@ public class KucoinFuturesClientBuilder {
         return client;
     }
 
-    public KucoinFuturesClientBuilder withApiKey(String apiKey, String secret, String passPhrase) {
-        this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
+    public KucoinFuturesClientBuilder withApiKey(String key, String secret, String passPhrase) {
+        this.apiKey = FuturesApiKey.builder().key(key).secret(secret).passPhrase(passPhrase).build();
+        return this;
+    }
+
+    public KucoinFuturesClientBuilder withApiKey(String key, String secret, String passPhrase, String keyVersion) {
+        this.apiKey = FuturesApiKey.builder().key(key).secret(secret).passPhrase(passPhrase)
+                .keyVersion(keyVersion).build();
         return this;
     }
 
@@ -225,4 +226,5 @@ public class KucoinFuturesClientBuilder {
         this.chooseServerStrategy = chooseServerStrategy;
         return this;
     }
+
 }

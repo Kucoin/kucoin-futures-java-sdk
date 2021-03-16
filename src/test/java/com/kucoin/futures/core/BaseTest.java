@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core;
 
+import com.kucoin.futures.core.constants.APIConstants;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
 import org.junit.AfterClass;
@@ -39,14 +40,10 @@ public class BaseTest {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        // sandbox
-//        futuresRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
-//                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380")
-//                .buildRestClient();
+        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
+                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703",
+                        "1828380", APIConstants.DEFAULT_API_KEY_VERSION);
 
-        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder()
-                .withBaseUrl("https://api-futures.kucoin.cc")
-                .withApiKey("60010212d304000006c2e490", "b9626b9a-c869-413f-b1d3-cc5858171d53", "1828380");
         futuresRestClient = builder.buildRestClient();
         kucoinFuturesPrivateWSClient = builder.buildPrivateWSClient();
         kucoinFuturesPrivateWSClient.connect();

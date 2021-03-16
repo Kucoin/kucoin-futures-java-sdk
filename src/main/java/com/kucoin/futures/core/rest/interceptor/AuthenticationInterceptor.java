@@ -33,22 +33,16 @@ public class AuthenticationInterceptor implements Interceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 
-    private String apiKey;
-    private String secret;
-    private String passPhrase;
+    private FuturesApiKey apiKey;
 
     /**
      * Constructor of API - keys are loaded from VM options, environment variables, resource files
      *
      * @param apiKey The API key.
-     * @param secret The API secret.
-     * @param passPhrase The API passphrase.
      * @throws KucoinFuturesApiException in case of any error
      */
-    public AuthenticationInterceptor(String apiKey, String secret, String passPhrase) {
+    public AuthenticationInterceptor(FuturesApiKey apiKey) {
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     /**
@@ -58,14 +52,18 @@ public class AuthenticationInterceptor implements Interceptor {
      */
     protected void validateCredentials() throws KucoinFuturesApiException {
         String humanMessage = ". Please check environment variables or VM options";
-        if (Strings.isNullOrEmpty(this.apiKey)) {
+        if (Strings.isNullOrEmpty(this.apiKey.getKey())) {
             throw new KucoinFuturesApiException("Missing " + APIConstants.API_HEADER_KEY + humanMessage);
         }
-        if (Strings.isNullOrEmpty(this.secret)) {
+        if (Strings.isNullOrEmpty(this.apiKey.getSecret())) {
             throw new KucoinFuturesApiException("Missing " + APIConstants.USER_API_SECRET + humanMessage);
         }
-        if (Strings.isNullOrEmpty(this.passPhrase)) {
+        if (Strings.isNullOrEmpty(this.apiKey.getPassPhrase())) {
             throw new KucoinFuturesApiException("Missing " + APIConstants.API_HEADER_PASSPHRASE + humanMessage);
+        }
+        if (StringUtils.isEmpty(this.apiKey.getKeyVersion())) {
+            this.apiKey.setKeyVersion(APIConstants.DEFAULT_API_KEY_VERSION);
+            LOGGER.info("Set keyVersion to default " + APIConstants.DEFAULT_API_KEY_VERSION);
         }
     }
 
@@ -76,13 +74,18 @@ public class AuthenticationInterceptor implements Interceptor {
         Request.Builder newRequestBuilder = original.newBuilder();
 
         String timestamp = String.valueOf(System.currentTimeMillis());
-        String signature = genSignature(original, secret, timestamp);
+        String signature = genSignature(original, apiKey.getSecret(), timestamp);
 
-        newRequestBuilder.addHeader(APIConstants.API_HEADER_KEY, apiKey);
+        newRequestBuilder.addHeader(APIConstants.API_HEADER_KEY, apiKey.getKey());
         newRequestBuilder.addHeader(APIConstants.API_HEADER_SIGN, signature);
-        newRequestBuilder.addHeader(API_HEADER_PASSPHRASE, passPhrase);
         newRequestBuilder.addHeader(APIConstants.API_HEADER_TIMESTAMP, timestamp);
-        newRequestBuilder.addHeader("X-VERSION", "csw"); // just for dev test
+
+        String passPhrase = apiKey.getPassPhrase();
+        if (apiKey.getKeyVersion().equals(APIConstants.DEFAULT_API_KEY_VERSION)) {
+            passPhrase = Base64.encodeBase64String(HmacUtils.hmacSha256(apiKey.getSecret(), passPhrase));
+            newRequestBuilder.addHeader(APIConstants.API_HEADER_KEY_VERSION, apiKey.getKeyVersion());
+        }
+        newRequestBuilder.addHeader(API_HEADER_PASSPHRASE, passPhrase);
 
         // Build new request after adding the necessary authentication information
         Request newRequest = newRequestBuilder.build();
@@ -92,7 +95,7 @@ public class AuthenticationInterceptor implements Interceptor {
     /**
      * Generates signature info.
      *
-     * @param request The HTTP request.
+     * @param request   The HTTP request.
      * @param apiSecret API secret.
      * @param timestamp Timestamp.
      * @return THe signature.

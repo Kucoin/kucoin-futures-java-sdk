@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.factory;
 
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interceptor.AuthenticationInterceptor;
 import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
@@ -19,8 +20,8 @@ public class HttpClientFactory {
         return buildHttpClient(null);
     }
 
-    public static OkHttpClient getAuthClient(String apiKey, String secret, String passPhrase) {
-        return buildHttpClient(new AuthenticationInterceptor(apiKey, secret, passPhrase));
+    public static OkHttpClient getAuthClient(FuturesApiKey apiKey) {
+        return buildHttpClient(new AuthenticationInterceptor(apiKey));
     }
 
     private static OkHttpClient buildHttpClient(Interceptor interceptor) {

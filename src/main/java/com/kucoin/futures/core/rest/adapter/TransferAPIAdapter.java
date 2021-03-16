@@ -4,6 +4,7 @@
 package com.kucoin.futures.core.rest.adapter;
 
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.TransferAPI;
 import com.kucoin.futures.core.rest.request.TransferApplyRequest;
 import com.kucoin.futures.core.rest.response.TransferHistory;
@@ -23,11 +24,9 @@ import java.math.BigDecimal;
  */
 public class TransferAPIAdapter extends AuthRetrofitAPIImpl<TransferAPIRetrofit> implements TransferAPI {
 
-    public TransferAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public TransferAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

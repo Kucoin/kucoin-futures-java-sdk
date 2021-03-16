@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.rest.adapter;
 
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.OrderAPI;
 import com.kucoin.futures.core.rest.interfaces.retrofit.OrderAPIRetrofit;
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
@@ -21,11 +22,9 @@ import java.util.List;
  */
 public class OrderAPIAdapter extends AuthRetrofitAPIImpl<OrderAPIRetrofit> implements OrderAPI {
 
-    public OrderAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public OrderAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

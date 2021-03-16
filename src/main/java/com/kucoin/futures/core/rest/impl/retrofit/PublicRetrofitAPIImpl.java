@@ -25,7 +25,7 @@ public class PublicRetrofitAPIImpl<T> extends AbstractRetrofitAPIImpl<T> {
             @SuppressWarnings("unchecked")
             Class<T> tClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                     .getActualTypeArguments()[0];
-            T t = RetrofitFactory.getPublicRetorfit(baseUrl).create(tClass);
+            T t = RetrofitFactory.getPublicRetrofit(baseUrl).create(tClass);
             apiImpl = t;
             return t;
         }

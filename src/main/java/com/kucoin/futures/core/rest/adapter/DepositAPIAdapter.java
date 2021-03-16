@@ -4,6 +4,7 @@
 package com.kucoin.futures.core.rest.adapter;
 
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.DepositAPI;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
 import com.kucoin.futures.core.rest.response.DepositAddressResponse;
@@ -18,11 +19,9 @@ import java.io.IOException;
  */
 public class DepositAPIAdapter extends AuthRetrofitAPIImpl<DepositAPIRetrofit> implements DepositAPI {
 
-    public DepositAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public DepositAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
 

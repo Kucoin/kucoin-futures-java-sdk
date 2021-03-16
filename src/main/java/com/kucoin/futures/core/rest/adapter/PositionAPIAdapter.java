@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.rest.adapter;
 
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.PositionAPI;
 import com.kucoin.futures.core.rest.request.AddMarginManuallyRequest;
 import com.kucoin.futures.core.rest.request.UpdateAutoDepositMarginRequest;
@@ -21,11 +22,9 @@ import java.util.List;
  */
 public class PositionAPIAdapter extends AuthRetrofitAPIImpl<PositionAPIRetrofit> implements PositionAPI {
 
-    public PositionAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public PositionAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

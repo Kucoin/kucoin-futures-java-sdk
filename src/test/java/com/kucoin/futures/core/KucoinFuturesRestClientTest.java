@@ -3,34 +3,12 @@
  */
 package com.kucoin.futures.core;
 
-import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
-import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
-import com.kucoin.futures.core.rest.request.WithdrawApplyRequest;
-import com.kucoin.futures.core.rest.response.AccountOverviewResponse;
-import com.kucoin.futures.core.rest.response.ActiveOrderResponse;
-import com.kucoin.futures.core.rest.response.FillResponse;
-import com.kucoin.futures.core.rest.response.FundingHistoryResponse;
-import com.kucoin.futures.core.rest.response.InterestRateResponse;
-import com.kucoin.futures.core.rest.response.OrderCancelResponse;
-import com.kucoin.futures.core.rest.response.OrderCreateResponse;
-import com.kucoin.futures.core.rest.response.OrderResponse;
-import com.kucoin.futures.core.rest.response.PositionResponse;
-import com.kucoin.futures.core.rest.response.ServiceStatusResponse;
-import com.kucoin.futures.core.rest.response.TransferHistory;
-import com.kucoin.futures.core.rest.response.TransferResponse;
-import com.kucoin.futures.core.rest.response.WithdrawQuotaResponse;
 import com.kucoin.futures.core.exception.KucoinFuturesApiException;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
-import com.kucoin.futures.core.rest.response.ContractResponse;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.OrderBookResponse;
-import com.kucoin.futures.core.rest.response.Pagination;
-import com.kucoin.futures.core.rest.response.TickerResponse;
-import com.kucoin.futures.core.rest.response.TransactionHistory;
-import com.kucoin.futures.core.rest.response.TransactionHistoryResponse;
-import com.kucoin.futures.core.rest.response.WithdrawResponse;
+import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
+import com.kucoin.futures.core.rest.request.WithdrawApplyRequest;
+import com.kucoin.futures.core.rest.response.*;
 import org.hamcrest.core.Is;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,10 +21,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 
 /**

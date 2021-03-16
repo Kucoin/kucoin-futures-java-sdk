@@ -32,9 +32,7 @@ public class KucoinFuturesPrivateWSClientImpl extends KucoinFuturesPublicWSClien
         this(HttpClientFactory.getPublicClient(), new KucoinFuturesWebsocketListener(), kucoinClientBuilder.getChooseServerStrategy(),
                 new WebsocketPrivateAPIAdaptor(
                         kucoinClientBuilder.getBaseUrl(),
-                        kucoinClientBuilder.getApiKey(),
-                        kucoinClientBuilder.getSecret(),
-                        kucoinClientBuilder.getPassPhrase()));
+                        kucoinClientBuilder.getApiKey()));
     }
 
     public KucoinFuturesPrivateWSClientImpl(OkHttpClient client,

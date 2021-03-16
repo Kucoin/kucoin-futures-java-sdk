@@ -4,6 +4,7 @@
 package com.kucoin.futures.core.rest.adapter;
 
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.FillAPI;
 import com.kucoin.futures.core.rest.interfaces.retrofit.FillAPIRetrofit;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
@@ -19,11 +20,9 @@ import java.util.List;
  */
 public class FillAPIAdapter extends AuthRetrofitAPIImpl<FillAPIRetrofit> implements FillAPI {
 
-    public FillAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public FillAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

@@ -4,6 +4,7 @@
 package com.kucoin.futures.core.rest.adapter;
 
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.FundingFeeAPI;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
 import com.kucoin.futures.core.rest.response.HasMoreResponse;
@@ -19,11 +20,9 @@ import java.io.IOException;
  */
 public class FundingFeeAPIAdapter extends AuthRetrofitAPIImpl<FundingFeeAPIRetrofit> implements FundingFeeAPI {
 
-    public FundingFeeAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public FundingFeeAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

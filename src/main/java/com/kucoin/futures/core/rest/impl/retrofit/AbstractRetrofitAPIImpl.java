@@ -4,6 +4,7 @@
 package com.kucoin.futures.core.rest.impl.retrofit;
 
 import com.kucoin.futures.core.factory.KucoinFuturesObjectMapper;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.response.KucoinFuturesResponse;
 import com.kucoin.futures.core.exception.KucoinFuturesApiException;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,7 @@ public abstract class AbstractRetrofitAPIImpl<T> {
 
     protected String baseUrl;
 
-    protected String apiKey;
-
-    protected String secret;
-
-    protected String passPhrase;
+    protected FuturesApiKey apiKey;
 
     public abstract T getAPIImpl();
 
@@ -74,27 +71,12 @@ public abstract class AbstractRetrofitAPIImpl<T> {
         this.baseUrl = baseUrl;
     }
 
-    public String getApiKey() {
+    public FuturesApiKey getApiKey() {
         return apiKey;
     }
 
-    public void setApiKey(String apiKey) {
+    public void setApiKey(FuturesApiKey apiKey) {
         this.apiKey = apiKey;
     }
 
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public String getPassPhrase() {
-        return passPhrase;
-    }
-
-    public void setPassPhrase(String passPhrase) {
-        this.passPhrase = passPhrase;
-    }
 }

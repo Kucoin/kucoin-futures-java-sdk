@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.rest.adapter;
 
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.retrofit.AccountAPIRetrofit;
 import com.kucoin.futures.core.rest.response.AccountOverviewResponse;
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
@@ -20,11 +21,9 @@ import java.io.IOException;
  */
 public class AccountAPIAdapter extends AuthRetrofitAPIImpl<AccountAPIRetrofit> implements AccountAPI {
 
-    public AccountAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public AccountAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override

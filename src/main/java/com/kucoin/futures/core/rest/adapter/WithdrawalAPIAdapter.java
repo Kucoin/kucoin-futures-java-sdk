@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.rest.adapter;
 
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.WithdrawalAPI;
 import com.kucoin.futures.core.rest.response.WithdrawApplyResponse;
 import com.kucoin.futures.core.rest.response.WithdrawQuotaResponse;
@@ -20,11 +21,9 @@ import java.io.IOException;
  */
 public class WithdrawalAPIAdapter extends AuthRetrofitAPIImpl<WithdrawalAPIRetrofit> implements WithdrawalAPI {
 
-    public WithdrawalAPIAdapter(String baseUrl, String apiKey, String secret, String passPhrase) {
+    public WithdrawalAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.secret = secret;
-        this.passPhrase = passPhrase;
     }
 
     @Override
