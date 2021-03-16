@@ -12,16 +12,7 @@ import com.kucoin.futures.core.rest.adapter.WebsocketPublicAPIAdaptor;
 import com.kucoin.futures.core.rest.interfaces.WebsocketAPI;
 import com.kucoin.futures.core.websocket.ChooseServerStrategy;
 import com.kucoin.futures.core.websocket.KucoinFuturesAPICallback;
-import com.kucoin.futures.core.websocket.event.AnnouncementEvent;
-import com.kucoin.futures.core.websocket.event.ContractMarketEvent;
-import com.kucoin.futures.core.websocket.event.ExecutionChangeEvent;
-import com.kucoin.futures.core.websocket.event.KucoinEvent;
-import com.kucoin.futures.core.websocket.event.Level2ChangeEvent;
-import com.kucoin.futures.core.websocket.event.Level2OrderBookEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEventV2;
-import com.kucoin.futures.core.websocket.event.TickerChangeEvent;
-import com.kucoin.futures.core.websocket.event.TransactionStatisticEvent;
+import com.kucoin.futures.core.websocket.event.*;
 import com.kucoin.futures.core.websocket.impl.BaseWebsocketImpl;
 import com.kucoin.futures.core.websocket.listener.KucoinFuturesWebsocketListener;
 import okhttp3.OkHttpClient;
@@ -88,15 +79,6 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
             this.getListener().getCallbackMap().put(APIConstants.API_EXECUTION_TOPIC_PREFIX, callback);
         }
         String topic = APIConstants.API_EXECUTION_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
-        return subscribe(topic, false, true);
-    }
-
-    @Override
-    public String onLevel3Data(KucoinFuturesAPICallback<KucoinEvent<Level3ChangeEvent>> callback, String... symbols) {
-        if (callback != null) {
-            this.getListener().getCallbackMap().put(APIConstants.API_LEVEL3_TOPIC_PREFIX, callback);
-        }
-        String topic = APIConstants.API_LEVEL3_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
     }
 

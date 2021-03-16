@@ -54,22 +54,9 @@ import static org.hamcrest.junit.MatcherAssert.assertThat;
  */
 public class KucoinFuturesRestClientTest extends BaseTest {
 
-//    private static DuringPageRequest pageRequest;
-//    private static DuringHasMoreRequest hasMoreRequest;
-
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-//    @BeforeClass
-//    public static void setUpClass() {
-//        futuresRestClient = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
-//                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703", "1828380")
-//                .buildRestClient();
-//        startAt = LocalDateTime.of(2019, 9, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
-//        endAt = LocalDateTime.of(2019, 10, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
-//        pageRequest = DuringPageRequest.builder().starAt(startAt).endAt(endAt).currentPage(1).pageSize(10).build();
-//        hasMoreRequest = DuringHasMoreRequest.builder().starAt(startAt).endAt(endAt).offset(0).maxCount(10).build();
-//    }
 
     @Test
     public void accountAPI() throws Exception {
@@ -115,12 +102,17 @@ public class KucoinFuturesRestClientTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void transferAPI() throws Exception {
+        DuringPageRequest pageRequest = DuringPageRequest.builder()
+                .starAt(LocalDateTime.now().minusHours(23).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
+                .endAt(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
+                .currentPage(1)
+                .pageSize(10).build();
+
         Pagination<TransferHistory> records = futuresRestClient.transferAPI().getTransferOutRecords("SUCCESS", null, pageRequest);
         assertThat(records.getItems().size(), is(0));
 
-        TransferResponse transferResponse = futuresRestClient.transferAPI().toKucoinMainAccount("123456", BigDecimal.valueOf(0.00000001));
+        TransferResponse transferResponse = futuresRestClient.transferAPI().toKucoinMainAccount("123456", BigDecimal.valueOf(0.0000001), "USDT");
         assertThat(transferResponse.getApplyId(), notNullValue());
 
         futuresRestClient.transferAPI().cancelTransferOutRequest(transferResponse.getApplyId());
@@ -213,8 +205,8 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         OrderBookResponse fullOrderBookAggregated = futuresRestClient.orderBookAPI().getFullLevel2OrderBook(SYMBOL);
         assertThat(fullOrderBookAggregated, notNullValue());
 
-//        OrderBookResponse orderBook20 = futuresRestClient.orderBookAPI().getDepth20Level2OrderBook(SYMBOL);
-//        assertThat(orderBook20, notNullValue());
+        OrderBookResponse orderBook20 = futuresRestClient.orderBookAPI().getDepth20Level2OrderBook(SYMBOL);
+        assertThat(orderBook20, notNullValue());
 
         OrderBookResponse orderBook100 = futuresRestClient.orderBookAPI().getDepth100Level2OrderBook(SYMBOL);
         assertThat(orderBook100, notNullValue());

@@ -5,6 +5,7 @@ package com.kucoin.futures.core.rest.adapter;
 
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.interfaces.TransferAPI;
+import com.kucoin.futures.core.rest.request.TransferApplyRequest;
 import com.kucoin.futures.core.rest.response.TransferHistory;
 import com.kucoin.futures.core.rest.interfaces.retrofit.TransferAPIRetrofit;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
@@ -30,13 +31,12 @@ public class TransferAPIAdapter extends AuthRetrofitAPIImpl<TransferAPIRetrofit>
     }
 
     @Override
-    public TransferResponse toKucoinMainAccount(String bizNo, BigDecimal amount) throws IOException {
-        return super.executeSync(getAPIImpl().applyTransfer(bizNo, amount));
-    }
-
-    @Override
     public TransferResponse toKucoinMainAccount(String bizNo, BigDecimal amount, String currency) throws IOException {
-        return super.executeSync(getAPIImpl().applyTransfer(bizNo, amount, currency));
+        TransferApplyRequest request = new TransferApplyRequest();
+        request.setBizNo(bizNo);
+        request.setAmount(amount);
+        request.setCurrency(currency);
+        return super.executeSync(getAPIImpl().applyTransfer(request));
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.kucoin.futures.core.websocket.event.ContractMarketEvent;
 import com.kucoin.futures.core.websocket.event.ExecutionChangeEvent;
 import com.kucoin.futures.core.websocket.event.KucoinEvent;
 import com.kucoin.futures.core.websocket.event.Level2OrderBookEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEvent;
 import com.kucoin.futures.core.websocket.event.Level3ChangeEventV2;
 import com.kucoin.futures.core.websocket.event.TickerChangeEvent;
 import com.kucoin.futures.core.websocket.event.TransactionStatisticEvent;
@@ -74,18 +73,6 @@ public interface KucoinFuturesPublicWSClient {
      * @return The subscription UUID, or null if sending failed.
      */
     String onExecutionData(KucoinFuturesAPICallback<KucoinEvent<ExecutionChangeEvent>> callback, String... symbols);
-
-    /**
-     * Subsribe this topic to get the updated data for orders and trades.
-     * This channel provides real-time updates on orders and trades.
-     * These updates can be applied on to a Level 3 order book snapshot for users to
-     * maintain an accurate and up-to-date copy of the exchange order book.
-     *
-     * @param callback
-     * @param symbols
-     * @return The subscription UUID, or null if sending failed.
-     */
-    String onLevel3Data(KucoinFuturesAPICallback<KucoinEvent<Level3ChangeEvent>> callback, String... symbols);
 
     /**
      * Subsribe this topic to get the updated data for orders and trades.

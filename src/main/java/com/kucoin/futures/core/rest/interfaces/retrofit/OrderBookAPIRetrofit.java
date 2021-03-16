@@ -34,10 +34,10 @@ public interface OrderBookAPIRetrofit {
                                                                       @Query("end") long end);
 
     @GET("api/v1/level3/snapshot")
-    Call<KucoinFuturesResponse<OrderBookResponse>> getFullLevel3OrderBook(@Query("symbol") String symbol);
+    Call<KucoinFuturesResponse<OrderBookResponse>> getFullLevel3OrderBookV1(@Query("symbol") String symbol);
 
     @GET("api/v2/level3/snapshot")
-    Call<KucoinFuturesResponse<OrderBookResponse>> getFullLevel3OrderBookV2(@Query("symbol") String symbol);
+    Call<KucoinFuturesResponse<OrderBookResponse>> getFullLevel3OrderBook(@Query("symbol") String symbol);
 
     @GET("api/v1/level3/message/query")
     @Deprecated

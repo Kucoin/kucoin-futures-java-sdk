@@ -15,14 +15,11 @@ import com.kucoin.futures.core.websocket.event.ContractMarketEvent;
 import com.kucoin.futures.core.websocket.event.ExecutionChangeEvent;
 import com.kucoin.futures.core.websocket.event.Level2ChangeEvent;
 import com.kucoin.futures.core.websocket.event.Level2OrderBookEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEvent;
 import com.kucoin.futures.core.websocket.event.PositionChangeEvent;
 import com.kucoin.futures.core.websocket.event.StopOrderLifecycleEvent;
 import com.kucoin.futures.core.websocket.event.TransactionStatisticEvent;
 import com.kucoin.futures.core.websocket.event.Level3ChangeEventV2;
 import org.hamcrest.core.Is;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -189,15 +186,8 @@ public class KucoinFuturesWSClientTest extends BaseTest {
 
     @Test
     public void onLevel3Data() throws Exception {
-        AtomicReference<Level3ChangeEvent> event = new AtomicReference<>();
         AtomicReference<Level3ChangeEventV2> v2Event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
-
-        kucoinFuturesPrivateWSClient.onLevel3Data(response -> {
-            event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL3, SYMBOL);
-            gotEvent.countDown();
-        }, SYMBOL);
 
         kucoinFuturesPrivateWSClient.onLevel3DataV2(response -> {
             v2Event.set(response.getData());
@@ -208,8 +198,7 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         // Trigger a market change
         placeOrderAndCancelOrder();
 
-        assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
-        assertThat(event.get(), notNullValue());
+        assertTrue(gotEvent.await(10, TimeUnit.SECONDS));
         assertThat(v2Event.get(), notNullValue());
     }
 
