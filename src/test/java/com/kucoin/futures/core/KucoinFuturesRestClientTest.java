@@ -39,7 +39,7 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         assertThat(accountOverviewResponse, notNullValue());
 
         HasMoreResponse<TransactionHistory> transactionHistoryHasMoreResponse = futuresRestClient.accountAPI()
-                .transactionHistory(null, null, null);
+                .transactionHistory(null, null, null, null);
         assertThat(transactionHistoryHasMoreResponse, notNullValue());
         assertThat(transactionHistoryHasMoreResponse.isHasMore(), Is.is(false));
     }
