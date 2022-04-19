@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * Account API
+ *
  * @author chenshiwei
  * @email casocroz@gmail.com
  * @date 2019/7/25
@@ -21,12 +22,12 @@ public interface AccountAPI {
 
     /**
      * User's account overview
-     *
+     * <p>
      * This endpoint requires the General permission.
      *
      * @param currency [Optional] Currecny ,including XBT,USDT,Default XBT
      * @return The accounts.
-     * @throws IOException on socket errors.
+     * @throws IOException               on socket errors.
      * @throws KucoinFuturesApiException when errors are returned from the exchange.
      */
     AccountOverviewResponse accountOverview(String currency) throws IOException;
@@ -39,12 +40,14 @@ public interface AccountAPI {
      * @param type     [Optional] Type RealisedPNL-Realised profit and loss, Deposit-Deposit, Withdrawal-withdraw,
      *                 Transferin-Transfer in, TransferOut-Transfer out
      * @param currency [Optional] Currency of transaction history XBT or USDT
+     * @param forward  [optional] This parameter functions to judge whether the lookup is forward or not.
+     *                 True means “yes” and False means “no”. This parameter is set as true by default
      * @param request  [Optional] include startAt endAt offset and maxCount optional parameters
      * @return The account balance.
-     * @throws IOException on socket errors.
+     * @throws IOException               on socket errors.
      * @throws KucoinFuturesApiException when errors are returned from the exchange.
      */
-    HasMoreResponse<TransactionHistory> transactionHistory(String type, String currency, DuringHasMoreRequest request)
+    HasMoreResponse<TransactionHistory> transactionHistory(String type, String currency, Boolean forward, DuringHasMoreRequest request)
             throws IOException;
 
 }

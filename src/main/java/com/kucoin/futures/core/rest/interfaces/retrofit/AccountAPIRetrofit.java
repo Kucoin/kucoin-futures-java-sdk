@@ -21,9 +21,10 @@ public interface AccountAPIRetrofit {
 
     @GET("api/v1/transaction-history")
     Call<KucoinFuturesResponse<HasMoreResponse<TransactionHistory>>> transactionHistory(@Query("startAt") Long startAt,
-                                                                                @Query("endAt") Long endAt,
-                                                                                @Query("type") String type,
-                                                                                @Query("offset") Long offset,
-                                                                                @Query("maxCount") Long maxCount,
-                                                                                @Query("currency") String currency);
+                                                                                        @Query("endAt") Long endAt,
+                                                                                        @Query("type") String type,
+                                                                                        @Query("offset") Long offset,
+                                                                                        @Query("maxCount") Long maxCount,
+                                                                                        @Query("currency") String currency,
+                                                                                        @Query("forward") Boolean forward);
 }
