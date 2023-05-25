@@ -19,6 +19,7 @@ public class APIConstants {
     public static final String API_HEADER_PASSPHRASE = "KC-API-PASSPHRASE";
     public static final String API_HEADER_TIMESTAMP = "KC-API-TIMESTAMP";
     public static final String API_HEADER_KEY_VERSION = "KC-API-KEY-VERSION";
+    public static final String API_HEADER_USER_AGENT = "User-Agent";
 
     public static final String DEFAULT_API_KEY_VERSION = "2";
 

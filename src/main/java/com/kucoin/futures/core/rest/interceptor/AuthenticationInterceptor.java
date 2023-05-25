@@ -86,6 +86,7 @@ public class AuthenticationInterceptor implements Interceptor {
             newRequestBuilder.addHeader(APIConstants.API_HEADER_KEY_VERSION, apiKey.getKeyVersion());
         }
         newRequestBuilder.addHeader(API_HEADER_PASSPHRASE, passPhrase);
+        newRequestBuilder.addHeader(APIConstants.API_HEADER_USER_AGENT, "KuCoin-Futures-Java-SDK:" + apiKey.getKeyVersion());
 
         // Build new request after adding the necessary authentication information
         Request newRequest = newRequestBuilder.build();
