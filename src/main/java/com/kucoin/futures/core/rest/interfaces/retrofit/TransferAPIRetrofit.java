@@ -4,6 +4,8 @@
 package com.kucoin.futures.core.rest.interfaces.retrofit;
 
 import com.kucoin.futures.core.rest.request.TransferApplyRequest;
+import com.kucoin.futures.core.rest.request.TransferInRequest;
+import com.kucoin.futures.core.rest.request.TransferOutRequest;
 import com.kucoin.futures.core.rest.response.KucoinFuturesResponse;
 import com.kucoin.futures.core.rest.response.Pagination;
 import com.kucoin.futures.core.rest.response.TransferHistory;
@@ -40,4 +42,9 @@ public interface TransferAPIRetrofit {
     @DELETE("api/v1/cancel/transfer-out")
     Call<KucoinFuturesResponse<TransferResponse>> cancelTransfer(@Query("applyId") String applyId);
 
+    @POST("api/v3/transfer-out")
+    Call<KucoinFuturesResponse<TransferResponse>> transferOut(@Body TransferOutRequest request);
+
+    @POST("api/v1/transfer-in")
+    Call<KucoinFuturesResponse<Void>> transferIn(@Body TransferInRequest request);
 }

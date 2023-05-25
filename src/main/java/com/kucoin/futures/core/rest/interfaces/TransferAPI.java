@@ -48,5 +48,33 @@ public interface TransferAPI {
      * @param applyId
      * @throws IOException
      */
+    @Deprecated
     void cancelTransferOutRequest(String applyId) throws IOException;
+
+    /**
+     * The amount to be transferred will be deducted from the KuCoin Futures Account.
+     * Please ensure that you have sufficient funds in your KuCoin Futures Account, or the transfer will fail.
+     * Once the transfer arrives your KuCoin-Main Account, the endpoint will respond and return the applyId.
+     * This ID could be used to cancel the transfer request.
+     *
+     * @param recAccountType Receive account type, including MAIN,TRADE
+     * @param amount   Amount to be transfer out
+     * @param currency Currency, including XBT,USDT
+     * @return
+     * @throws IOException
+     */
+    TransferResponse transferOut(String recAccountType, BigDecimal amount, String currency) throws IOException;
+
+    /**
+     * The amount to be transferred will be deducted from the KuCoin Futures Account.
+     * Please ensure that you have sufficient funds in your KuCoin Futures Account, or the transfer will fail.
+     * Once the transfer arrives your KuCoin-Main Account, the endpoint will respond and return the applyId.
+     * This ID could be used to cancel the transfer request.
+     *
+     * @param payAccountType Payment account type, including MAIN,TRADE
+     * @param amount   Amount to be transfer out
+     * @param currency Currency, including XBT,USDT
+     * @throws IOException
+     */
+    void transferIn(String payAccountType, BigDecimal amount, String currency) throws IOException;
 }

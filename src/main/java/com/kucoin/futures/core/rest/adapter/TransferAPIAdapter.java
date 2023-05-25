@@ -7,6 +7,8 @@ import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.TransferAPI;
 import com.kucoin.futures.core.rest.request.TransferApplyRequest;
+import com.kucoin.futures.core.rest.request.TransferInRequest;
+import com.kucoin.futures.core.rest.request.TransferOutRequest;
 import com.kucoin.futures.core.rest.response.TransferHistory;
 import com.kucoin.futures.core.rest.interfaces.retrofit.TransferAPIRetrofit;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
@@ -48,5 +50,23 @@ public class TransferAPIAdapter extends AuthRetrofitAPIImpl<TransferAPIRetrofit>
     @Override
     public void cancelTransferOutRequest(String applyId) throws IOException {
         super.executeSync(getAPIImpl().cancelTransfer(applyId));
+    }
+
+    @Override
+    public TransferResponse transferOut(String recAccountType, BigDecimal amount, String currency) throws IOException {
+        TransferOutRequest transferOutRequest = new TransferOutRequest();
+        transferOutRequest.setRecAccountType(recAccountType);
+        transferOutRequest.setAmount(amount);
+        transferOutRequest.setCurrency(currency);
+        return super.executeSync(getAPIImpl().transferOut(transferOutRequest));
+    }
+
+    @Override
+    public void transferIn(String payAccountType, BigDecimal amount, String currency) throws IOException {
+        TransferInRequest transferInRequest = new TransferInRequest();
+        transferInRequest.setPayAccountType(payAccountType);
+        transferInRequest.setAmount(amount);
+        transferInRequest.setCurrency(currency);
+        super.executeSync(getAPIImpl().transferIn(transferInRequest));
     }
 }

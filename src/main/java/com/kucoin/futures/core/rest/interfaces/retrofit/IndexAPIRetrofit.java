@@ -47,7 +47,7 @@ public interface IndexAPIRetrofit {
     @GET("api/v1/premium/query")
     Call<KucoinFuturesResponse<HasMoreResponse<IndexRateResponse>>> getPremiumIndex(@Query("symbol") String symbol);
 
-    @GET("v1/funding-rate/{symbol}/current")
+    @GET("api/v1/funding-rate/{symbol}/current")
     Call<KucoinFuturesResponse<FundingRateResponse>> getCurrentFundingRate(@Path("symbol") String symbol);
 
 }

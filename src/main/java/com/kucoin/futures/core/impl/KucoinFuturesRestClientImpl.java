@@ -3,24 +3,9 @@
  */
 package com.kucoin.futures.core.impl;
 
-import com.kucoin.futures.core.rest.interfaces.DepositAPI;
-import com.kucoin.futures.core.rest.interfaces.FillAPI;
-import com.kucoin.futures.core.rest.interfaces.IndexAPI;
-import com.kucoin.futures.core.rest.interfaces.KChartAPI;
-import com.kucoin.futures.core.rest.interfaces.OrderAPI;
-import com.kucoin.futures.core.rest.interfaces.PositionAPI;
-import com.kucoin.futures.core.rest.interfaces.ServiceStatusAPI;
-import com.kucoin.futures.core.rest.interfaces.SymbolAPI;
-import com.kucoin.futures.core.rest.interfaces.TickerAPI;
-import com.kucoin.futures.core.rest.interfaces.WithdrawalAPI;
+import com.kucoin.futures.core.rest.interfaces.*;
 import com.kucoin.futures.core.KucoinFuturesClientBuilder;
 import com.kucoin.futures.core.KucoinFuturesRestClient;
-import com.kucoin.futures.core.rest.interfaces.AccountAPI;
-import com.kucoin.futures.core.rest.interfaces.FundingFeeAPI;
-import com.kucoin.futures.core.rest.interfaces.HistoryAPI;
-import com.kucoin.futures.core.rest.interfaces.OrderBookAPI;
-import com.kucoin.futures.core.rest.interfaces.TimeAPI;
-import com.kucoin.futures.core.rest.interfaces.TransferAPI;
 
 /**
  * Created by chenshiwei on 2019/1/9.
@@ -59,6 +44,8 @@ public class KucoinFuturesRestClientImpl implements KucoinFuturesRestClient {
 
     private KChartAPI kChartAPI;
 
+    private RiskLimitAPI riskLimitAPI;
+
     public KucoinFuturesRestClientImpl(KucoinFuturesClientBuilder kucoinBuilder) {
         this.accountAPI = kucoinBuilder.getAccountAPI();
         this.depositAPI = kucoinBuilder.getDepositAPI();
@@ -76,6 +63,7 @@ public class KucoinFuturesRestClientImpl implements KucoinFuturesRestClient {
         this.timeAPI = kucoinBuilder.getTimeAPI();
         this.serviceStatusAPI = kucoinBuilder.getServiceStatusAPI();
         this.kChartAPI = kucoinBuilder.getKChartAPI();
+        this.riskLimitAPI = kucoinBuilder.getRiskLimitAPI();
     }
 
     @Override
@@ -158,4 +146,8 @@ public class KucoinFuturesRestClientImpl implements KucoinFuturesRestClient {
         return kChartAPI;
     }
 
+    @Override
+    public RiskLimitAPI riskLimitAPI() {
+        return riskLimitAPI;
+    }
 }

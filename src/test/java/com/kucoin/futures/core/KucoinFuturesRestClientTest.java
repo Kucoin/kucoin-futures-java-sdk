@@ -8,6 +8,7 @@ import com.kucoin.futures.core.rest.request.DuringPageRequest;
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
 import com.kucoin.futures.core.rest.request.WithdrawApplyRequest;
 import com.kucoin.futures.core.rest.response.*;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 
 /**
@@ -42,6 +44,18 @@ public class KucoinFuturesRestClientTest extends BaseTest {
                 .transactionHistory(null, null, null);
         assertThat(transactionHistoryHasMoreResponse, notNullValue());
         assertThat(transactionHistoryHasMoreResponse.isHasMore(), Is.is(false));
+
+        SubApiKeyResponse subApiKeyCreateResponse = futuresRestClient.accountAPI().createSubApiKey("TestSubUser001", "123456789", "remark test", null, null, null);
+        MatcherAssert.assertThat(subApiKeyCreateResponse, notNullValue());
+
+        List<SubApiKeyResponse> subApiKeyResponses = futuresRestClient.accountAPI().getSubApiKey("TestSubUser001", null);
+        MatcherAssert.assertThat(subApiKeyResponses, notNullValue());
+
+        SubApiKeyResponse subApiKeyUpdateResponse = futuresRestClient.accountAPI().updateSubApiKey("TestSubUser001", "apiKey", "123456789", null, "127.0.0.1", "360");
+        MatcherAssert.assertThat(subApiKeyUpdateResponse, notNullValue());
+
+        SubApiKeyResponse subApiKeyDeleteResponse = futuresRestClient.accountAPI().deleteSubApiKey("TestSubUser001", "apiKey", "123456789");
+        MatcherAssert.assertThat(subApiKeyDeleteResponse, notNullValue());
     }
 
     @Test
@@ -91,6 +105,20 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         assertThat(transferResponse.getApplyId(), notNullValue());
 
         futuresRestClient.transferAPI().cancelTransferOutRequest(transferResponse.getApplyId());
+
+        TransferResponse transferOutRes = futuresRestClient.transferAPI().transferOut("TRADE", BigDecimal.valueOf(0.0000001), "USDT");
+        assertThat(transferOutRes, notNullValue());
+
+        futuresRestClient.transferAPI().transferIn("TRADE", BigDecimal.valueOf(0.0000001), "USDT");
+    }
+
+    @Test
+    public void riskLimitAPI() throws Exception {
+        List<RiskLimitResponse> riskLimits = futuresRestClient.riskLimitAPI().getRiskLimit(SYMBOL);
+        assertThat(riskLimits, notNullValue());
+
+        Boolean result = futuresRestClient.riskLimitAPI().changeRiskLimit(SYMBOL, 2);
+        assertThat(result, is(true));
     }
 
     @Test
@@ -201,6 +229,9 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         HasMoreResponse<InterestRateResponse> interestRateList = futuresRestClient.indexAPI()
                 .getInterestRateList(SYMBOL, null, null, hasMoreRequest);
         assertThat(interestRateList, notNullValue());
+
+        FundingRateResponse currentFundingRate = futuresRestClient.indexAPI().getCurrentFundingRate(SYMBOL);
+        assertThat(currentFundingRate, notNullValue());
     }
 
     @Test

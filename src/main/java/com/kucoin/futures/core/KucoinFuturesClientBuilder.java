@@ -7,41 +7,11 @@ import com.kucoin.futures.core.constants.APIConstants;
 import com.kucoin.futures.core.impl.KucoinFuturesPrivateWSClientImpl;
 import com.kucoin.futures.core.impl.KucoinFuturesPublicWSClientImpl;
 import com.kucoin.futures.core.impl.KucoinFuturesRestClientImpl;
-import com.kucoin.futures.core.rest.adapter.AccountAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.DepositAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.FillAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.HistoryAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.IndexAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.KChartAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.OrderAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.OrderBookAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.PositionAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.ServiceStatusAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.SymbolAPIAdaptor;
-import com.kucoin.futures.core.rest.adapter.TickerAPIAdaptor;
-import com.kucoin.futures.core.rest.adapter.TimeAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.TransferAPIAdapter;
-import com.kucoin.futures.core.rest.adapter.WithdrawalAPIAdapter;
+import com.kucoin.futures.core.rest.adapter.*;
 import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
-import com.kucoin.futures.core.rest.interfaces.DepositAPI;
-import com.kucoin.futures.core.rest.interfaces.FillAPI;
-import com.kucoin.futures.core.rest.interfaces.FundingFeeAPI;
-import com.kucoin.futures.core.rest.interfaces.HistoryAPI;
-import com.kucoin.futures.core.rest.interfaces.IndexAPI;
-import com.kucoin.futures.core.rest.interfaces.KChartAPI;
-import com.kucoin.futures.core.rest.interfaces.OrderAPI;
-import com.kucoin.futures.core.rest.interfaces.OrderBookAPI;
-import com.kucoin.futures.core.rest.interfaces.PositionAPI;
-import com.kucoin.futures.core.rest.interfaces.ServiceStatusAPI;
-import com.kucoin.futures.core.rest.interfaces.SymbolAPI;
-import com.kucoin.futures.core.rest.interfaces.TickerAPI;
-import com.kucoin.futures.core.rest.interfaces.TimeAPI;
-import com.kucoin.futures.core.rest.interfaces.TransferAPI;
-import com.kucoin.futures.core.rest.interfaces.WithdrawalAPI;
+import com.kucoin.futures.core.rest.interfaces.*;
 import com.kucoin.futures.core.websocket.ChooseServerStrategy;
 import com.kucoin.futures.core.websocket.RandomChooseStrategy;
-import com.kucoin.futures.core.rest.adapter.FundingFeeAPIAdapter;
-import com.kucoin.futures.core.rest.interfaces.AccountAPI;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -89,6 +59,8 @@ public class KucoinFuturesClientBuilder {
 
     private KChartAPI kChartAPI;
 
+    private RiskLimitAPI riskLimitAPI;
+
     private ChooseServerStrategy chooseServerStrategy;
 
     public KucoinFuturesRestClient buildRestClient() {
@@ -109,6 +81,7 @@ public class KucoinFuturesClientBuilder {
         if (timeAPI == null) timeAPI = new TimeAPIAdapter(baseUrl);
         if (serviceStatusAPI == null) serviceStatusAPI = new ServiceStatusAPIAdapter(baseUrl);
         if (kChartAPI == null) kChartAPI = new KChartAPIAdapter(baseUrl);
+        if (riskLimitAPI == null) riskLimitAPI = new RiskLimitAPIAdaptor(baseUrl, apiKey);
         return new KucoinFuturesRestClientImpl(this);
     }
 
