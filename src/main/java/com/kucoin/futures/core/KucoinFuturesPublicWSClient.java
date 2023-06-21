@@ -4,17 +4,9 @@
 package com.kucoin.futures.core;
 
 import com.kucoin.futures.core.model.InstanceServer;
-import com.kucoin.futures.core.websocket.event.Level2ChangeEvent;
+import com.kucoin.futures.core.websocket.event.*;
 import com.kucoin.futures.core.model.enums.PublicChannelEnum;
 import com.kucoin.futures.core.websocket.KucoinFuturesAPICallback;
-import com.kucoin.futures.core.websocket.event.AnnouncementEvent;
-import com.kucoin.futures.core.websocket.event.ContractMarketEvent;
-import com.kucoin.futures.core.websocket.event.ExecutionChangeEvent;
-import com.kucoin.futures.core.websocket.event.KucoinEvent;
-import com.kucoin.futures.core.websocket.event.Level2OrderBookEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEventV2;
-import com.kucoin.futures.core.websocket.event.TickerChangeEvent;
-import com.kucoin.futures.core.websocket.event.TransactionStatisticEvent;
 
 import java.io.IOException;
 
@@ -33,7 +25,10 @@ public interface KucoinFuturesPublicWSClient {
      * @param symbols
      * @return The subscription UUID, or null if sending failed.
      */
+    @Deprecated
     String onTicker(KucoinFuturesAPICallback<KucoinEvent<TickerChangeEvent>> callback, String... symbols);
+
+    String onTickerV2(KucoinFuturesAPICallback<KucoinEvent<TickerV2ChangeEvent>> callback, String... symbols);
 
     /**
      * Subscribe this topic to get Level 2 order book data.

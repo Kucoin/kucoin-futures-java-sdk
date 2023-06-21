@@ -4,12 +4,8 @@
 package com.kucoin.futures.core;
 
 import com.kucoin.futures.core.websocket.KucoinFuturesAPICallback;
-import com.kucoin.futures.core.websocket.event.AccountChangeEvent;
-import com.kucoin.futures.core.websocket.event.KucoinEvent;
-import com.kucoin.futures.core.websocket.event.PositionChangeEvent;
+import com.kucoin.futures.core.websocket.event.*;
 import com.kucoin.futures.core.model.enums.PrivateChannelEnum;
-import com.kucoin.futures.core.websocket.event.StopOrderActivateEvent;
-import com.kucoin.futures.core.websocket.event.StopOrderLifecycleEvent;
 
 /**
  * Created by chenshiwei on 2019/1/10.
@@ -48,7 +44,26 @@ public interface KucoinFuturesPrivateWSClient extends KucoinFuturesPublicWSClien
      * @param symbols
      * @return
      */
-    String onPositionChange(KucoinFuturesAPICallback<KucoinEvent<PositionChangeEvent>> callback, String... symbols);
+    String onPositionChange(KucoinFuturesAPICallback<KucoinEvent<PositionChangeEvent>> callback, String ... symbols);
+
+
+    /**
+     * You will receive a message when the specified symbol order changes
+     *
+     * @param callback
+     * @param symbol
+     * @return
+     */
+    String onOrderChange(KucoinFuturesAPICallback<KucoinEvent<OrderChangeEvent>> callback, String symbol);
+
+
+    /**
+     * You will receive this message when the order changes.
+     *
+     * @param callback
+     * @return
+     */
+    String onOrderChange(KucoinFuturesAPICallback<KucoinEvent<OrderChangeEvent>> callback);
 
     /**
      * Unsubscribe from topics you have subscribed to.

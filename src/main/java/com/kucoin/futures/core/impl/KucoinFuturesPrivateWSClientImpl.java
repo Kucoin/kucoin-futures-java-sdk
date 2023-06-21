@@ -6,22 +6,15 @@ package com.kucoin.futures.core.impl;
 import com.kucoin.futures.core.constants.APIConstants;
 import com.kucoin.futures.core.rest.interfaces.WebsocketAPI;
 import com.kucoin.futures.core.websocket.ChooseServerStrategy;
-import com.kucoin.futures.core.websocket.event.AccountChangeEvent;
-import com.kucoin.futures.core.websocket.event.PositionChangeEvent;
+import com.kucoin.futures.core.websocket.event.*;
 import com.kucoin.futures.core.KucoinFuturesClientBuilder;
 import com.kucoin.futures.core.KucoinFuturesPrivateWSClient;
 import com.kucoin.futures.core.factory.HttpClientFactory;
 import com.kucoin.futures.core.model.enums.PrivateChannelEnum;
 import com.kucoin.futures.core.rest.adapter.WebsocketPrivateAPIAdaptor;
 import com.kucoin.futures.core.websocket.KucoinFuturesAPICallback;
-import com.kucoin.futures.core.websocket.event.KucoinEvent;
-import com.kucoin.futures.core.websocket.event.StopOrderActivateEvent;
-import com.kucoin.futures.core.websocket.event.StopOrderLifecycleEvent;
 import com.kucoin.futures.core.websocket.listener.KucoinFuturesWebsocketListener;
 import okhttp3.OkHttpClient;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * Created by chenshiwei on 2019/1/18.
@@ -73,13 +66,31 @@ public class KucoinFuturesPrivateWSClientImpl extends KucoinFuturesPublicWSClien
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_POSITION_TOPIC_PREFIX, callback);
         }
-        String topic = APIConstants.API_POSITION_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
+        String topic = APIConstants.API_POSITION_TOPIC_PREFIX + String.join(",", symbols);
         return subscribe(topic, true, true);
     }
 
     @Override
+    public String onOrderChange(KucoinFuturesAPICallback<KucoinEvent<OrderChangeEvent>> callback, String symbol) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_SYMBOL_ORDER_CHANGE_TOPIC_PREFIX, callback);
+        }
+        String topic = APIConstants.API_SYMBOL_ORDER_CHANGE_TOPIC_PREFIX + symbol;
+        return subscribe(topic, true, true);
+    }
+
+    @Override
+    public String onOrderChange(KucoinFuturesAPICallback<KucoinEvent<OrderChangeEvent>> callback) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_ORDER_CHANGE_TOPIC_PREFIX, callback);
+        }
+        return subscribe(APIConstants.API_ORDER_CHANGE_TOPIC_PREFIX, true, true);
+    }
+
+    @Override
     public String unsubscribe(PrivateChannelEnum channelEnum, String... symbols) {
-        return super.unsubscribe(channelEnum.getTopicPrefix() + Arrays.stream(symbols).collect(Collectors.joining(",")),
+        return super.unsubscribe(channelEnum.getTopicPrefix() + String.join(",", symbols),
                 true, true);
     }
+
 }

@@ -47,6 +47,15 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     }
 
     @Override
+    public String onTickerV2(KucoinFuturesAPICallback<KucoinEvent<TickerV2ChangeEvent>> callback, String... symbols) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_TICKER_V2_TOPIC_PREFIX, callback);
+        }
+        String topic = APIConstants.API_TICKER_V2_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
+        return subscribe(topic, false, true);
+    }
+
+    @Override
     public String onLevel2Data(KucoinFuturesAPICallback<KucoinEvent<Level2ChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_LEVEL2_TOPIC_PREFIX, callback);

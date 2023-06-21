@@ -24,6 +24,7 @@ public class APIConstants {
     public static final String DEFAULT_API_KEY_VERSION = "2";
 
     public static final String API_TICKER_TOPIC_PREFIX = "/contractMarket/ticker:";
+    public static final String API_TICKER_V2_TOPIC_PREFIX = "/contractMarket/tickerV2:";
     public static final String API_LEVEL2_TOPIC_PREFIX = "/contractMarket/level2:";
     public static final String API_LEVEL2_DEPTH_5_PREFIX = "/contractMarket/level2Depth5:";
     public static final String API_LEVEL2_DEPTH_50_PREFIX = "/contractMarket/level2Depth50:";
@@ -33,6 +34,8 @@ public class APIConstants {
     public static final String API_ANNOUNCEMENT_TOPIC_PREFIX = "/contract/announcement";
     public static final String API_TRANSACTION_TOPIC_PREFIX = "/contractMarket/snapshot:";
 
+    public static final String API_SYMBOL_ORDER_CHANGE_TOPIC_PREFIX = "/contractMarket/tradeOrders:";
+    public static final String API_ORDER_CHANGE_TOPIC_PREFIX = "/contractMarket/tradeOrders";
     public static final String API_ACTIVATE_TOPIC_PREFIX = "/contractMarket/stopOrder";
     public static final String API_LIFECYCLE_TOPIC_PREFIX = "/contractMarket/advancedOrders";
     public static final String API_BALANCE_TOPIC_PREFIX = "/contractAccount/wallet";
