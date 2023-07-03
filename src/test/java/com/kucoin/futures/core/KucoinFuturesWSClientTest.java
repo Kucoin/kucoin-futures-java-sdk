@@ -10,15 +10,7 @@ import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
 import com.kucoin.futures.core.rest.response.MarkPriceResponse;
 import com.kucoin.futures.core.rest.response.OrderCreateResponse;
 import com.kucoin.futures.core.rest.response.TickerResponse;
-import com.kucoin.futures.core.websocket.event.AccountChangeEvent;
-import com.kucoin.futures.core.websocket.event.ContractMarketEvent;
-import com.kucoin.futures.core.websocket.event.ExecutionChangeEvent;
-import com.kucoin.futures.core.websocket.event.Level2ChangeEvent;
-import com.kucoin.futures.core.websocket.event.Level2OrderBookEvent;
-import com.kucoin.futures.core.websocket.event.PositionChangeEvent;
-import com.kucoin.futures.core.websocket.event.StopOrderLifecycleEvent;
-import com.kucoin.futures.core.websocket.event.TransactionStatisticEvent;
-import com.kucoin.futures.core.websocket.event.Level3ChangeEventV2;
+import com.kucoin.futures.core.websocket.event.*;
 import org.hamcrest.core.Is;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -108,6 +100,36 @@ public class KucoinFuturesWSClientTest extends BaseTest {
     }
 
     @Test
+    public void onSymbolOrderChange() throws Exception {
+        AtomicReference<OrderChangeEvent> event = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(1);
+
+        kucoinFuturesPrivateWSClient.onOrderChange(response -> {
+            event.set(response.getData());
+            kucoinFuturesPrivateWSClient.unsubscribe(PrivateChannelEnum.SYMBOL_ORDER_CHANGE, "BTCUSDT");
+            gotEvent.countDown();
+        }, "BTCUSDT");
+
+        assertTrue(gotEvent.await(200, TimeUnit.SECONDS));
+        assertThat(event.get(), notNullValue());
+    }
+
+    @Test
+    public void onOrderChange() throws Exception {
+        AtomicReference<OrderChangeEvent> event = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(1);
+
+        kucoinFuturesPrivateWSClient.onOrderChange(response -> {
+            event.set(response.getData());
+            kucoinFuturesPrivateWSClient.unsubscribe(PrivateChannelEnum.ORDER_CHANGE);
+            gotEvent.countDown();
+        });
+
+        assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
+        assertThat(event.get(), notNullValue());
+    }
+
+    @Test
     public void ping() throws Exception {
         String requestId = "1234567890";
         String ping = kucoinFuturesPrivateWSClient.ping(requestId);
@@ -122,6 +144,24 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         kucoinFuturesPrivateWSClient.onTicker(response -> {
             event.set(response.getData());
             kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.TICKER, SYMBOL);
+            gotEvent.countDown();
+        }, SYMBOL);
+
+        // Make some actual executions
+        buyAndSell();
+
+        assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
+        assertThat(event.get(), notNullValue());
+    }
+
+    @Test
+    public void onTickerV2() throws Exception {
+        AtomicReference<TickerV2ChangeEvent> event = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(1);
+
+        kucoinFuturesPublicWSClient.onTickerV2(response -> {
+            event.set(response.getData());
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.TICKERV2, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
@@ -207,7 +247,7 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         AtomicReference<ContractMarketEvent> event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
 
-        kucoinFuturesPrivateWSClient.onContractMarketData(response -> {
+        kucoinFuturesPublicWSClient.onContractMarketData(response -> {
             event.set(response.getData());
             kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.CONTRACT_MARKET, SYMBOL);
             gotEvent.countDown();

@@ -26,6 +26,8 @@ public class BaseTest {
     protected static KucoinFuturesRestClient futuresRestClient;
     protected static KucoinFuturesPrivateWSClient kucoinFuturesPrivateWSClient;
 
+    protected static KucoinFuturesPublicWSClient kucoinFuturesPublicWSClient;
+
     protected static Long startAt;
     protected static Long endAt;
 
@@ -40,13 +42,16 @@ public class BaseTest {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-sandbox-futures.kucoin.cc")
-                .withApiKey("604dd0fe365ac600068976d6", "09f3e686-f1d5-4cc3-9a3e-5d60c29d3703",
-                        "1828380", APIConstants.DEFAULT_API_KEY_VERSION);
+        KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-futures.kucoin.com")
+                .withApiKey("", "",
+                        "", APIConstants.DEFAULT_API_KEY_VERSION);
 
         futuresRestClient = builder.buildRestClient();
         kucoinFuturesPrivateWSClient = builder.buildPrivateWSClient();
         kucoinFuturesPrivateWSClient.connect();
+
+        kucoinFuturesPublicWSClient = builder.buildPublicWSClient();
+        kucoinFuturesPublicWSClient.connect();
 
         startAt = LocalDateTime.of(2021, 3, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
         endAt = LocalDateTime.of(2021, 4, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
