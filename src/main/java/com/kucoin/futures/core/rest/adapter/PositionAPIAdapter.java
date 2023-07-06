@@ -17,8 +17,7 @@ import java.util.List;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/14
+ * @since 2019/10/14
  */
 public class PositionAPIAdapter extends AuthRetrofitAPIImpl<PositionAPIRetrofit> implements PositionAPI {
 

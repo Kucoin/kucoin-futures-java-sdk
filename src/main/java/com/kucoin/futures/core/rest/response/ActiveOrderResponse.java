@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 /**
  * Active order value calculation response
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/8/14
+ * @since 2019/8/14
  */
 @Data
 public class ActiveOrderResponse {

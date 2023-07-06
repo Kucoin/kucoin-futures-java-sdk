@@ -7,9 +7,6 @@ import java.math.BigDecimal;
 /**
  * @author Jason Yao
  * @version 1.0.0
- * @ClassName TransferOutRequest.java
- * @Description
- * @createTime 2023/05/25日 10:30:00
  */
 @Data
 public class TransferOutRequest {

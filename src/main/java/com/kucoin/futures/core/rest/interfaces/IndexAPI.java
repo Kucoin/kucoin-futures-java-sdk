@@ -16,8 +16,7 @@ import java.io.IOException;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/15
+ * @since 2019/10/15
  */
 public interface IndexAPI {
 
@@ -46,7 +45,7 @@ public interface IndexAPI {
      *                True means “yes” and False means “no”. This parameter is set as true by default
      * @param request [Optional] include startAt endAt offset and maxCount optional parameters
      * @return
-     * @throws Exception
+     * @throws IOException
      */
     HasMoreResponse<IndexResponse> getIndexList(String symbol, Boolean reverse, Boolean forward,
                                                 DuringHasMoreRequest request) throws IOException;

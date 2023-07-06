@@ -10,8 +10,7 @@ import java.io.IOException;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/21
+ * @since 2019/10/21
  */
 public interface WebsocketAPI {
 

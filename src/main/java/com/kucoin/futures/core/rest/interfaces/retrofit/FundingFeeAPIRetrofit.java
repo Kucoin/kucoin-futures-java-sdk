@@ -12,8 +12,7 @@ import retrofit2.http.Query;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/14
+ * @since 2019/10/14
  */
 public interface FundingFeeAPIRetrofit {
 

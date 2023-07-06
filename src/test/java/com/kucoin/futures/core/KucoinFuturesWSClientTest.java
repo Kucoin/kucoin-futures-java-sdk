@@ -30,8 +30,7 @@ import static org.junit.Assert.assertTrue;
  * Run with -Dorg.slf4j.simpleLogger.defaultLogLevel=debug for debug logging
  *
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/21
+ * @since 2019/10/21
  */
 public class KucoinFuturesWSClientTest extends BaseTest {
 

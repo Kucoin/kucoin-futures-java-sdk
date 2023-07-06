@@ -10,8 +10,7 @@ import java.io.IOException;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2020/6/28
+ * @since 2020/6/28
  */
 public interface ServiceStatusAPI {
 

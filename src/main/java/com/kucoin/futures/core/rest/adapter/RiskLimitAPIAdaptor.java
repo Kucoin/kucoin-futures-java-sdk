@@ -13,9 +13,6 @@ import java.util.List;
 /**
  * @author Jason Yao
  * @version 1.0.0
- * @ClassName RiskLimitAPIAdaptor.java
- * @Description
- * @createTime 2023/05/25日 11:05:00
  */
 public class RiskLimitAPIAdaptor extends AuthRetrofitAPIImpl<RiskLimitAPIRetrofit> implements RiskLimitAPI {
     public RiskLimitAPIAdaptor(String baseUrl, FuturesApiKey apiKey) {

@@ -13,8 +13,7 @@ import java.io.IOException;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2020/6/29
+ * @since 2020/6/29
  */
 public class ServiceStatusAPIAdapter extends PublicRetrofitAPIImpl<ServiceStatusAPIRetrofit> implements ServiceStatusAPI {
 

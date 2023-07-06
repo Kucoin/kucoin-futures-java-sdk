@@ -13,8 +13,7 @@ import java.util.Date;
  * Transfer history
  *
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/8/14
+ * @since 2019/8/14
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

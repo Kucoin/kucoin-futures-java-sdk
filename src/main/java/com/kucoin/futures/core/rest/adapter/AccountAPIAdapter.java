@@ -22,8 +22,7 @@ import java.util.Map;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/7/26
+ * @since 2019/7/26
  */
 public class AccountAPIAdapter extends AuthRetrofitAPIImpl<AccountAPIRetrofit> implements AccountAPI {
 

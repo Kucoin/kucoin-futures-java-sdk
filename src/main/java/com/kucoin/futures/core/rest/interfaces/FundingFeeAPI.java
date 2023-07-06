@@ -12,8 +12,7 @@ import java.io.IOException;
 /**
  * Funding Fee API
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/14
+ * @since 2019/10/14
  */
 public interface FundingFeeAPI {
 

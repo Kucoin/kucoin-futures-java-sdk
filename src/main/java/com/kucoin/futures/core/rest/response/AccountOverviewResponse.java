@@ -10,14 +10,12 @@ import java.math.BigDecimal;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/7/25
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountOverviewResponse {
 
-    private BigDecimal accountEquity;
+    private BigDecimal accountERquity;
 
     private BigDecimal unrealisedPNL;
 

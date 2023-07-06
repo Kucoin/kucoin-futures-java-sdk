@@ -11,8 +11,7 @@ import java.util.List;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/7/26
+ * @since 2019/7/26
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

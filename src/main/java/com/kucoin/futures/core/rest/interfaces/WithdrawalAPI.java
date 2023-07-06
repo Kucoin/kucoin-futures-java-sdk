@@ -15,8 +15,7 @@ import java.io.IOException;
 /**
  * Withdrawal API
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/7/25
+ * @since 2019/7/25
  */
 public interface WithdrawalAPI {
 

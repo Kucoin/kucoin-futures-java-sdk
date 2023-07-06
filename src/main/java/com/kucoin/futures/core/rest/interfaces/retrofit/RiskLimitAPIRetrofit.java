@@ -14,9 +14,6 @@ import java.util.List;
 /**
  * @author Jason Yao
  * @version 1.0.0
- * @ClassName RiskLimitAPIRetrofit.java
- * @Description
- * @createTime 2023/05/25日 10:44:00
  */
 public interface RiskLimitAPIRetrofit {
     @GET("api/v1/contracts/risk-limit/{symbol}")

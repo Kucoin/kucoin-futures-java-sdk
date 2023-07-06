@@ -11,8 +11,7 @@ import java.util.List;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/15
+ * @since 2019/10/15
  */
 @Data
 public class IndexResponse extends IndexRateResponse {

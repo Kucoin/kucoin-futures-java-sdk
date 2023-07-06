@@ -8,9 +8,6 @@ import java.util.List;
 /**
  * @author Jason Yao
  * @version 1.0.0
- * @ClassName RiskLimitAPI.java
- * @Description
- * @createTime 2023/05/25日 11:01:00
  */
 public interface RiskLimitAPI {
     /**

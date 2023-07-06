@@ -19,8 +19,7 @@ import java.io.IOException;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/15
+ * @since 2019/10/15
  */
 public class IndexAPIAdapter extends PublicRetrofitAPIImpl<IndexAPIRetrofit> implements IndexAPI {
 

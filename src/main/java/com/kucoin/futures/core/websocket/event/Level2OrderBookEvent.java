@@ -10,8 +10,7 @@ import lombok.Data;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2020/6/30
+ * @since 2020/6/30
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

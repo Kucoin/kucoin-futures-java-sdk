@@ -11,8 +11,7 @@ import retrofit2.http.GET;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2020/6/29
+ * @since 2020/6/29
  */
 public interface ServiceStatusAPIRetrofit {
 

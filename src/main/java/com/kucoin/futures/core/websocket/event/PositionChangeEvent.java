@@ -11,8 +11,7 @@ import java.math.BigDecimal;
 
 /**
  * @author chenshiwei
- * @email casocroz@gmail.com
- * @date 2019/10/18
+ * @since 2019/10/18
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

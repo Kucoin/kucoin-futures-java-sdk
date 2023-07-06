@@ -13,7 +13,7 @@ The detailed document [https://docs.kucoin.com/futures/](https://docs.kucoin.com
 <dependency>
     <groupId>com.kucoin.futures</groupId>
     <artifactId>kucoin-futures-java-sdk</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 </dependency>
 ```
 ## Usage
