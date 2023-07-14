@@ -15,7 +15,9 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountOverviewResponse {
 
-    private BigDecimal accountERquity;
+    private String accountName;
+
+    private BigDecimal accountEquity;
 
     private BigDecimal unrealisedPNL;
 

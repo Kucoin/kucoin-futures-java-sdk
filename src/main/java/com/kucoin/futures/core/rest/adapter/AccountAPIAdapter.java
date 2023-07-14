@@ -7,13 +7,10 @@ import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.retrofit.AccountAPIRetrofit;
 import com.kucoin.futures.core.rest.request.SubApiKeyCreateRequest;
 import com.kucoin.futures.core.rest.request.SubApiKeyUpdateRequest;
-import com.kucoin.futures.core.rest.response.AccountOverviewResponse;
+import com.kucoin.futures.core.rest.response.*;
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.interfaces.AccountAPI;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.SubApiKeyResponse;
-import com.kucoin.futures.core.rest.response.TransactionHistory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,6 +31,11 @@ public class AccountAPIAdapter extends AuthRetrofitAPIImpl<AccountAPIRetrofit> i
     @Override
     public AccountOverviewResponse accountOverview(String currency) throws IOException {
         return super.executeSync(getAPIImpl().accountOverview(currency));
+    }
+
+    @Override
+    public AccountOverviewAllResponse accountOverviewAll(String currency) throws IOException {
+        return super.executeSync(getAPIImpl().accountOverviewAll(currency));
     }
 
     @Override

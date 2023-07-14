@@ -5,10 +5,7 @@ package com.kucoin.futures.core.rest.interfaces;
 
 import com.kucoin.futures.core.exception.KucoinFuturesApiException;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
-import com.kucoin.futures.core.rest.response.AccountOverviewResponse;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.SubApiKeyResponse;
-import com.kucoin.futures.core.rest.response.TransactionHistory;
+import com.kucoin.futures.core.rest.response.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +28,17 @@ public interface AccountAPI {
      * @throws KucoinFuturesApiException when errors are returned from the exchange.
      */
     AccountOverviewResponse accountOverview(String currency) throws IOException;
+
+    /**
+     * User's all account overview
+     *
+     * This endpoint requires the General permission.
+     *
+     * @param currency [Optional] Currecny ,including XBT,USDT,Default XBT
+     * @return The accounts.
+     * @throws IOException on socket errors.
+     */
+    AccountOverviewAllResponse accountOverviewAll(String currency) throws IOException;
 
     /**
      * If there are open positions, the status of the first page returned will be Pending,

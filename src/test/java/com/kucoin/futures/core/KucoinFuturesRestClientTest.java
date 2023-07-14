@@ -37,8 +37,11 @@ public class KucoinFuturesRestClientTest extends BaseTest {
 
     @Test
     public void accountAPI() throws Exception {
-        AccountOverviewResponse accountOverviewResponse = futuresRestClient.accountAPI().accountOverview(null);
+        AccountOverviewResponse accountOverviewResponse = futuresRestClient.accountAPI().accountOverview("USDT");
         assertThat(accountOverviewResponse, notNullValue());
+
+        AccountOverviewAllResponse accountOverviewAllResponse = futuresRestClient.accountAPI().accountOverviewAll("USDT");
+        assertThat(accountOverviewAllResponse, notNullValue());
 
         HasMoreResponse<TransactionHistory> transactionHistoryHasMoreResponse = futuresRestClient.accountAPI()
                 .transactionHistory(null, null, null);

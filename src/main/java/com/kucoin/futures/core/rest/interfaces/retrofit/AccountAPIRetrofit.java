@@ -20,6 +20,9 @@ public interface AccountAPIRetrofit {
     @GET("api/v1/account-overview")
     Call<KucoinFuturesResponse<AccountOverviewResponse>> accountOverview(@Query("currency") String currency);
 
+    @GET("api/v1/account-overview-all")
+    Call<KucoinFuturesResponse<AccountOverviewAllResponse>> accountOverviewAll(@Query("currency") String currency);
+
     @GET("api/v1/transaction-history")
     Call<KucoinFuturesResponse<HasMoreResponse<TransactionHistory>>> transactionHistory(@Query("startAt") Long startAt,
                                                                                 @Query("endAt") Long endAt,
