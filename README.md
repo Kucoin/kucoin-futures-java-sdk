@@ -13,7 +13,7 @@ The detailed document [https://docs.kucoin.com/futures/](https://docs.kucoin.com
 <dependency>
     <groupId>com.kucoin.futures</groupId>
     <artifactId>kucoin-futures-java-sdk</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 ## Usage
@@ -30,8 +30,6 @@ You can use `withBaseUrl` method to change evironment.
 | **Environment** | **BaseUri** |
 | -------- | -------- |
 | *Production* `DEFAULT` | https://api-futures.kucoin.com |
-| *Sandbox* | https://api-sandbox-futures.kucoin.com |
-
 If you only need to use the public web socket client or REST client public method, you can igonre `withApiKey` method. To customize your own API implementation, you may use the `with*API` method we provided for you.
 
 ## Example
