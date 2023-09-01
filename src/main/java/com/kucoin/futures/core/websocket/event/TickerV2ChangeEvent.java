@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = false)
 public class TickerV2ChangeEvent {
 
+    private Long sequence;
+
     private String symbol;
 
     private BigDecimal bestBidSize;

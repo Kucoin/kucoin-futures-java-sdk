@@ -35,6 +35,8 @@ public class KucoinFuturesWebsocketListener extends WebSocketListener {
 
     private Map<String, KucoinFuturesAPICallback> callbackMap = new HashMap<>();
 
+    private Map<String, TypeReference> typeReferenceMap = new HashMap<>();
+
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         LOGGER.debug("web socket open");
@@ -56,7 +58,8 @@ public class KucoinFuturesWebsocketListener extends WebSocketListener {
 
         Optional<String> first = callbackMap.keySet().stream().filter(topic::contains).findFirst();
 
-        KucoinEvent kucoinEvent = deserialize(text, new TypeReference<KucoinEvent>() {});
+        KucoinEvent kucoinEvent = (KucoinEvent) deserialize(text, typeReferenceMap.getOrDefault(first.get(), new TypeReference<KucoinEvent>() {}));
+
         if (first.isPresent()) {
             callbackMap.get(first.get()).onResponse(kucoinEvent);
         } else {

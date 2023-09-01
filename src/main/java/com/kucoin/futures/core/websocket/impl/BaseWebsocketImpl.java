@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 /**
@@ -38,6 +40,8 @@ public abstract class BaseWebsocketImpl implements Closeable {
 
     private WebSocket webSocket;
 
+    private final Timer pingTimer = new Timer("FUTURES-WS-PING-TIMER");
+
     protected BaseWebsocketImpl(OkHttpClient client, KucoinFuturesWebsocketListener listener, ChooseServerStrategy chooseServerStrategy,
                                 WebsocketAPI websocketAPI) {
         this.client = client;
@@ -49,6 +53,12 @@ public abstract class BaseWebsocketImpl implements Closeable {
     public InstanceServer connect() throws IOException {
         Pair<WebSocket, InstanceServer> newWebSocket = createNewWebSocket();
         this.webSocket = newWebSocket.getLeft();
+        pingTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ping(UUID.randomUUID().toString());
+            }
+        },0, newWebSocket.getRight().getPingInterval());
         return newWebSocket.getRight();
     }
 
@@ -106,6 +116,7 @@ public abstract class BaseWebsocketImpl implements Closeable {
     @Override
     public void close() throws IOException {
         LOGGER.debug("Web Socket Close");
+        pingTimer.cancel();
         client.dispatcher().executorService().shutdown();
     }
 

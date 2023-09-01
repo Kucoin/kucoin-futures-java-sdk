@@ -3,6 +3,7 @@
  */
 package com.kucoin.futures.core.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.kucoin.futures.core.KucoinFuturesClientBuilder;
 import com.kucoin.futures.core.KucoinFuturesPublicWSClient;
 import com.kucoin.futures.core.constants.APIConstants;
@@ -41,6 +42,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onTicker(KucoinFuturesAPICallback<KucoinEvent<TickerChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_TICKER_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_TICKER_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<TickerChangeEvent>>() {});
         }
         String topic = APIConstants.API_TICKER_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -50,6 +53,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onTickerV2(KucoinFuturesAPICallback<KucoinEvent<TickerV2ChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_TICKER_V2_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_TICKER_V2_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<TickerV2ChangeEvent>>() {});
         }
         String topic = APIConstants.API_TICKER_V2_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -59,6 +64,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onLevel2Data(KucoinFuturesAPICallback<KucoinEvent<Level2ChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_LEVEL2_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_LEVEL2_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<Level2ChangeEvent>>() {});
         }
         String topic = APIConstants.API_LEVEL2_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -68,6 +75,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onLevel2Depth5Data(KucoinFuturesAPICallback<KucoinEvent<Level2OrderBookEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_LEVEL2_DEPTH_5_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_LEVEL2_DEPTH_5_PREFIX,
+                    new TypeReference<KucoinEvent<Level2OrderBookEvent>>() {});
         }
         String topic = APIConstants.API_LEVEL2_DEPTH_5_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -77,6 +86,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onLevel2Depth50Data(KucoinFuturesAPICallback<KucoinEvent<Level2OrderBookEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_LEVEL2_DEPTH_50_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_LEVEL2_DEPTH_50_PREFIX,
+                    new TypeReference<KucoinEvent<Level2OrderBookEvent>>() {});
         }
         String topic = APIConstants.API_LEVEL2_DEPTH_50_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -86,6 +97,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onExecutionData(KucoinFuturesAPICallback<KucoinEvent<ExecutionChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_EXECUTION_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_EXECUTION_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<ExecutionChangeEvent>>() {});
         }
         String topic = APIConstants.API_EXECUTION_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -95,6 +108,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onLevel3DataV2(KucoinFuturesAPICallback<KucoinEvent<Level3ChangeEventV2>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_LEVEL3_V2_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_LEVEL3_V2_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<Level3ChangeEventV2>>() {});
         }
         String topic = APIConstants.API_LEVEL3_V2_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -104,6 +119,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onContractMarketData(KucoinFuturesAPICallback<KucoinEvent<ContractMarketEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_CONTRACT_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_CONTRACT_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<ContractMarketEvent>>() {});
         }
         String topic = APIConstants.API_CONTRACT_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
@@ -113,6 +130,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onSystemAnnouncement(KucoinFuturesAPICallback<KucoinEvent<AnnouncementEvent>> callback) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_ANNOUNCEMENT_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_ANNOUNCEMENT_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<AnnouncementEvent>>() {});
         }
         String topic = APIConstants.API_ANNOUNCEMENT_TOPIC_PREFIX;
         return subscribe(topic, false, true);
@@ -122,6 +141,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     public String onTransactionStatistic(KucoinFuturesAPICallback<KucoinEvent<TransactionStatisticEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_TRANSACTION_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_TRANSACTION_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<TransactionStatisticEvent>>() {});
         }
         String topic = APIConstants.API_TRANSACTION_TOPIC_PREFIX + Arrays.stream(symbols).collect(Collectors.joining(","));
         return subscribe(topic, false, true);
