@@ -4,13 +4,7 @@
 
 package com.kucoin.futures.core.rest.interfaces.retrofit;
 
-import com.kucoin.futures.core.rest.response.IndexResponse;
-import com.kucoin.futures.core.rest.response.MarkPriceResponse;
-import com.kucoin.futures.core.rest.response.FundingRateResponse;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.IndexRateResponse;
-import com.kucoin.futures.core.rest.response.InterestRateResponse;
-import com.kucoin.futures.core.rest.response.KucoinFuturesResponse;
+import com.kucoin.futures.core.rest.response.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -48,5 +42,8 @@ public interface IndexAPIRetrofit {
 
     @GET("api/v1/funding-rate/{symbol}/current")
     Call<KucoinFuturesResponse<FundingRateResponse>> getCurrentFundingRate(@Path("symbol") String symbol);
+
+    @GET("api/v1/trade-statistics")
+    Call<KucoinFuturesResponse<TradeStatisticsResponse>> getTradeStatistics();
 
 }

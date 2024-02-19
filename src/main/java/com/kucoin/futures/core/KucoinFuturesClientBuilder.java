@@ -77,7 +77,7 @@ public class KucoinFuturesClientBuilder {
         if (tickerAPI == null) tickerAPI = new TickerAPIAdaptor(baseUrl);
         if (orderBookAPI == null) orderBookAPI = new OrderBookAPIAdapter(baseUrl);
         if (historyAPI == null) historyAPI = new HistoryAPIAdapter(baseUrl);
-        if (indexAPI == null) indexAPI = new IndexAPIAdapter(baseUrl);
+        if (indexAPI == null) indexAPI = new IndexAPIAdapter(baseUrl, apiKey);
         if (timeAPI == null) timeAPI = new TimeAPIAdapter(baseUrl);
         if (serviceStatusAPI == null) serviceStatusAPI = new ServiceStatusAPIAdapter(baseUrl);
         if (kChartAPI == null) kChartAPI = new KChartAPIAdapter(baseUrl);

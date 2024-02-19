@@ -43,8 +43,7 @@ public class BaseTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         KucoinFuturesClientBuilder builder = new KucoinFuturesClientBuilder().withBaseUrl("https://api-futures.kucoin.com")
-                .withApiKey("", "",
-                        "", APIConstants.DEFAULT_API_KEY_VERSION);
+                .withApiKey("", "", "", APIConstants.DEFAULT_API_KEY_VERSION);
 
         futuresRestClient = builder.buildRestClient();
         kucoinFuturesPrivateWSClient = builder.buildPrivateWSClient();
@@ -53,8 +52,8 @@ public class BaseTest {
         kucoinFuturesPublicWSClient = builder.buildPublicWSClient();
         kucoinFuturesPublicWSClient.connect();
 
-        startAt = LocalDateTime.of(2021, 3, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
-        endAt = LocalDateTime.of(2021, 4, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
+        startAt = LocalDateTime.of(2024, 1, 1, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
+        endAt = LocalDateTime.of(2024, 1, 30, 0, 0, 0).atZone(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli();
 
         pageRequest = DuringPageRequest.builder().starAt(startAt).endAt(endAt).currentPage(1).pageSize(10).build();
         hasMoreRequest = DuringHasMoreRequest.builder().starAt(startAt).endAt(endAt).offset(0).maxCount(10).build();

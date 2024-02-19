@@ -4,13 +4,8 @@
 
 package com.kucoin.futures.core.rest.interfaces;
 
-import com.kucoin.futures.core.rest.response.IndexResponse;
-import com.kucoin.futures.core.rest.response.MarkPriceResponse;
+import com.kucoin.futures.core.rest.response.*;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
-import com.kucoin.futures.core.rest.response.FundingRateResponse;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.IndexRateResponse;
-import com.kucoin.futures.core.rest.response.InterestRateResponse;
 
 import java.io.IOException;
 
@@ -73,4 +68,13 @@ public interface IndexAPI {
      * @return
      */
     FundingRateResponse getCurrentFundingRate(String symbol) throws IOException;
+
+    /**
+     * Get 24hour futures transaction volume
+     *
+     * @return
+     * @throws IOException
+     */
+    TradeStatisticsResponse getTradeStatistics() throws IOException;
+
 }

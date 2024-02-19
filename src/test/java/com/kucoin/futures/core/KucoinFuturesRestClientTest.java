@@ -135,6 +135,15 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         OrderCancelResponse orderCancelResponse = futuresRestClient.orderAPI().cancelOrder(order.getOrderId());
         assertThat(orderCancelResponse.getCancelledOrderIds().size(), is(1));
 
+        order = placeCannotDealLimitOrder();
+        assertThat(order, notNullValue());
+
+        orderDetail = futuresRestClient.orderAPI().getOrderDetail(order.getOrderId());
+        assertThat(orderDetail, notNullValue());
+
+        OrderCancelByClientOidResponse orderCancelByClientOidResponse = futuresRestClient.orderAPI().cancelOrderByClientOid(orderDetail.getClientOid(), SYMBOL);
+        assertThat(orderCancelByClientOidResponse.getClientOid(), notNullValue());
+
         placeCannotDealLimitOrder();
         OrderCancelResponse cancelAllLimitOrders = futuresRestClient.orderAPI().cancelAllLimitOrders(SYMBOL);
         assertThat(cancelAllLimitOrders.getCancelledOrderIds().size(), greaterThan(0));
@@ -189,6 +198,10 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         HasMoreResponse<FundingHistoryResponse> fundingHistory = futuresRestClient.fundingFeeAPI()
                 .getFundingHistory(SYMBOL, null, null, hasMoreRequest);
         assertThat(fundingHistory, notNullValue());
+
+        List<PublicFundingReteResponse> publicFundingReteResponses = futuresRestClient.fundingFeeAPI().getPublicFundingRates("IDUSDTM", 1700310700000L, 1702310700000L);
+        assertThat(publicFundingReteResponses, notNullValue());
+
     }
 
     @Test
@@ -235,6 +248,10 @@ public class KucoinFuturesRestClientTest extends BaseTest {
 
         FundingRateResponse currentFundingRate = futuresRestClient.indexAPI().getCurrentFundingRate(SYMBOL);
         assertThat(currentFundingRate, notNullValue());
+
+        TradeStatisticsResponse tradeStatistics = futuresRestClient.indexAPI().getTradeStatistics();
+        assertThat(tradeStatistics, notNullValue());
+
     }
 
     @Test
@@ -258,7 +275,7 @@ public class KucoinFuturesRestClientTest extends BaseTest {
 
     private OrderCreateResponse placeCannotDealLimitOrder() throws IOException {
         OrderCreateApiRequest pageRequest = OrderCreateApiRequest.builder()
-                .price(BigDecimal.valueOf(1000)).size(BigDecimal.ONE).side("buy").leverage("5")
+                .price(BigDecimal.valueOf(5)).size(BigDecimal.ONE).side("buy").leverage("5")
                 .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
         return futuresRestClient.orderAPI().createOrder(pageRequest);
     }

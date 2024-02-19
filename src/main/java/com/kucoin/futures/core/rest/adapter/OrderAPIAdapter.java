@@ -9,10 +9,8 @@ import com.kucoin.futures.core.rest.interfaces.retrofit.OrderAPIRetrofit;
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
 import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
-import com.kucoin.futures.core.rest.response.OrderCancelResponse;
-import com.kucoin.futures.core.rest.response.OrderCreateResponse;
-import com.kucoin.futures.core.rest.response.OrderResponse;
-import com.kucoin.futures.core.rest.response.Pagination;
+import com.kucoin.futures.core.rest.response.*;
+import retrofit2.http.Query;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +33,11 @@ public class OrderAPIAdapter extends AuthRetrofitAPIImpl<OrderAPIRetrofit> imple
     @Override
     public OrderCancelResponse cancelOrder(String orderId) throws IOException {
         return executeSync(getAPIImpl().cancelOrder(orderId));
+    }
+
+    @Override
+    public OrderCancelByClientOidResponse cancelOrderByClientOid(String clientOid, String symbol) throws IOException {
+        return executeSync(getAPIImpl().cancelOrderByClientOid(clientOid, symbol));
     }
 
     @Override

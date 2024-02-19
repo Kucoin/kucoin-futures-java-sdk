@@ -7,11 +7,13 @@ import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
 import com.kucoin.futures.core.rest.interfaces.FundingFeeAPI;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
+import com.kucoin.futures.core.rest.response.PublicFundingReteResponse;
 import com.kucoin.futures.core.rest.response.HasMoreResponse;
 import com.kucoin.futures.core.rest.interfaces.retrofit.FundingFeeAPIRetrofit;
 import com.kucoin.futures.core.rest.response.FundingHistoryResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author chenshiwei
@@ -30,5 +32,10 @@ public class FundingFeeAPIAdapter extends AuthRetrofitAPIImpl<FundingFeeAPIRetro
         if (request == null) request = DuringHasMoreRequest.builder().build();
         return super.executeSync(getAPIImpl().getFundingHistory(symbol, reverse, forward, request.getStarAt(),
                 request.getEndAt(), request.getOffset(), request.getMaxCount()));
+    }
+
+    @Override
+    public List<PublicFundingReteResponse> getPublicFundingRates(String symbol, long from, long to) throws IOException {
+        return super.executeSync(getAPIImpl().getFundingRates(symbol, from, to));
     }
 }

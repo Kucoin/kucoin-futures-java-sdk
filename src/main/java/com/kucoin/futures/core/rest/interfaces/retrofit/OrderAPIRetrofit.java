@@ -4,11 +4,7 @@
 package com.kucoin.futures.core.rest.interfaces.retrofit;
 
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
-import com.kucoin.futures.core.rest.response.KucoinFuturesResponse;
-import com.kucoin.futures.core.rest.response.OrderCancelResponse;
-import com.kucoin.futures.core.rest.response.OrderCreateResponse;
-import com.kucoin.futures.core.rest.response.OrderResponse;
-import com.kucoin.futures.core.rest.response.Pagination;
+import com.kucoin.futures.core.rest.response.*;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -29,6 +25,9 @@ public interface OrderAPIRetrofit {
 
     @DELETE("api/v1/orders/{orderId}")
     Call<KucoinFuturesResponse<OrderCancelResponse>> cancelOrder(@Path("orderId") String orderId);
+
+    @DELETE("api/v1/orders/client-order/{clientOid}")
+    Call<KucoinFuturesResponse<OrderCancelByClientOidResponse>> cancelOrderByClientOid(@Path("clientOid") String clientOid, @Query("symbol") String symbol);
 
     @DELETE("api/v1/orders")
     Call<KucoinFuturesResponse<OrderCancelResponse>> cancelLimitOrders(@Query("symbol") String symbol);

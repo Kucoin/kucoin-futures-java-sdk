@@ -4,16 +4,13 @@
 
 package com.kucoin.futures.core.rest.adapter;
 
-import com.kucoin.futures.core.rest.response.IndexResponse;
-import com.kucoin.futures.core.rest.response.MarkPriceResponse;
+import com.kucoin.futures.core.rest.impl.retrofit.AuthRetrofitAPIImpl;
+import com.kucoin.futures.core.rest.interceptor.FuturesApiKey;
+import com.kucoin.futures.core.rest.response.*;
 import com.kucoin.futures.core.rest.impl.retrofit.PublicRetrofitAPIImpl;
 import com.kucoin.futures.core.rest.interfaces.IndexAPI;
 import com.kucoin.futures.core.rest.interfaces.retrofit.IndexAPIRetrofit;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
-import com.kucoin.futures.core.rest.response.FundingRateResponse;
-import com.kucoin.futures.core.rest.response.HasMoreResponse;
-import com.kucoin.futures.core.rest.response.IndexRateResponse;
-import com.kucoin.futures.core.rest.response.InterestRateResponse;
 
 import java.io.IOException;
 
@@ -21,10 +18,11 @@ import java.io.IOException;
  * @author chenshiwei
  * @since 2019/10/15
  */
-public class IndexAPIAdapter extends PublicRetrofitAPIImpl<IndexAPIRetrofit> implements IndexAPI {
+public class IndexAPIAdapter extends AuthRetrofitAPIImpl<IndexAPIRetrofit> implements IndexAPI {
 
-    public IndexAPIAdapter(String baseUrl) {
+    public IndexAPIAdapter(String baseUrl, FuturesApiKey apiKey) {
         this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -60,4 +58,10 @@ public class IndexAPIAdapter extends PublicRetrofitAPIImpl<IndexAPIRetrofit> imp
     public FundingRateResponse getCurrentFundingRate(String symbol) throws IOException {
         return super.executeSync(getAPIImpl().getCurrentFundingRate(symbol));
     }
+
+    @Override
+    public TradeStatisticsResponse getTradeStatistics() throws IOException {
+        return super.executeSync(getAPIImpl().getTradeStatistics());
+    }
+
 }

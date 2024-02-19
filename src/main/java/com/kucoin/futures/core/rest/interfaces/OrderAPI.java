@@ -5,10 +5,7 @@ package com.kucoin.futures.core.rest.interfaces;
 
 import com.kucoin.futures.core.rest.request.DuringPageRequest;
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
-import com.kucoin.futures.core.rest.response.OrderCancelResponse;
-import com.kucoin.futures.core.rest.response.OrderCreateResponse;
-import com.kucoin.futures.core.rest.response.OrderResponse;
-import com.kucoin.futures.core.rest.response.Pagination;
+import com.kucoin.futures.core.rest.response.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,6 +42,16 @@ public interface OrderAPI {
      * @return A response containing the id of the cancelled order.
      */
     OrderCancelResponse cancelOrder(String orderId) throws IOException;
+
+    /**
+     * Cancel Order by clientOid
+     *
+     * @param clientOid
+     * @param symbol
+     * @return OrderCancelByClientOidResponse
+     * @throws IOException
+     */
+    OrderCancelByClientOidResponse cancelOrderByClientOid(String clientOid, String symbol) throws IOException;
 
     /**
      * Cancel all open orders (excluding stop orders). The response is a list of orderIDs of the canceled orders.

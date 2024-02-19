@@ -3,11 +3,13 @@
  */
 package com.kucoin.futures.core.rest.interfaces;
 
+import com.kucoin.futures.core.rest.response.PublicFundingReteResponse;
 import com.kucoin.futures.core.rest.response.FundingHistoryResponse;
 import com.kucoin.futures.core.rest.request.DuringHasMoreRequest;
 import com.kucoin.futures.core.rest.response.HasMoreResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Funding Fee API
@@ -30,5 +32,16 @@ public interface FundingFeeAPI {
      */
     HasMoreResponse<FundingHistoryResponse> getFundingHistory(String symbol, Boolean reverse, Boolean forward,
                                                               DuringHasMoreRequest request) throws IOException;
+
+    /**
+     * Get Public Funding History
+     *
+     * @param symbol
+     * @param from
+     * @param to
+     * @return
+     * @throws IOException
+     */
+    List<PublicFundingReteResponse> getPublicFundingRates(String symbol, long from, long to) throws IOException;
 
 }
