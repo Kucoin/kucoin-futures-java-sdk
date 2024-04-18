@@ -38,6 +38,9 @@ public interface OrderAPIRetrofit {
     @GET("api/v1/orders/{orderId}")
     Call<KucoinFuturesResponse<OrderResponse>> getOrder(@Path("orderId") String orderId);
 
+    @GET("api/v1/orders/byClientOid")
+    Call<KucoinFuturesResponse<OrderResponse>> getOrderOid(@Query("clientOid") String clientOid);
+
     @GET("api/v1/orders")
     Call<KucoinFuturesResponse<Pagination<OrderResponse>>> queryOrders(@Query("symbol") String symbol,
                                                                @Query("side") String side,

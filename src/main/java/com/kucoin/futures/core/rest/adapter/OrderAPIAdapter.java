@@ -56,6 +56,11 @@ public class OrderAPIAdapter extends AuthRetrofitAPIImpl<OrderAPIRetrofit> imple
     }
 
     @Override
+    public OrderResponse getOrderDetailOid(String orderClientOid) throws IOException {
+        return executeSync(getAPIImpl().getOrderOid(orderClientOid));
+    }
+
+    @Override
     public Pagination<OrderResponse> getOrderList(String symbol, String side, String type,
                                                   String status, DuringPageRequest request) throws IOException {
         if (request == null) request = DuringPageRequest.builder().build();
