@@ -113,4 +113,12 @@ public interface OrderAPI {
      */
     OrderResponse getOrderDetail(String orderId) throws IOException;
 
+    /**
+     * Get a single order by client order id (including a stop order).
+     *
+     * @param clientOid
+     * @return The requested order.
+     */
+    OrderResponse getOrderDetailOid(String clientOid) throws IOException;
+
 }
