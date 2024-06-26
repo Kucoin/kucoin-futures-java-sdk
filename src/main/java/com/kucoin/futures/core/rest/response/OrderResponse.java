@@ -58,11 +58,11 @@ public class OrderResponse {
 
     private boolean closeOrder;
 
-    private boolean reduceOnly;
-
     private String clientOid;
 
     private String remark;
+
+    private String tags;
 
     @JsonProperty("isActive")
     private boolean isActive;
@@ -71,13 +71,21 @@ public class OrderResponse {
 
     private Date createdAt;
 
+    private Date updatedAt;
+
+    private Date endAt;
+
+    private Long orderTime;
+
     private String settleCurrency;
 
     private String status;
 
-    private Date updatedAt;
+    private BigDecimal filledSize;
 
-    private Long orderTime;
+    private BigDecimal filledValue;
+
+    private boolean reduceOnly;
 
     public String getStop() {
         return this.stop == null ? null : this.stop.toLowerCase();

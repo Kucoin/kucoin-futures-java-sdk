@@ -34,6 +34,26 @@ public interface OrderAPI {
     OrderCreateResponse createOrder(OrderCreateApiRequest opsRequest) throws IOException;
 
     /**
+     * Place Multiple Orders
+     * You can place up to 20 orders at one time, including limit orders, market orders, and stop orders
+     *
+     * @param requests
+     * @return
+     * @throws IOException
+     */
+    List<OrderCreateMultiResponse> createOrderMulti(List<OrderCreateApiRequest> requests) throws IOException;
+
+    /**
+     * Order test endpoint, the request parameters and return parameters of this endpoint are exactly the same as the order endpoint, and can be used to verify whether the signature is correct and other operations.
+     * After placing an order, the order will not enter the matching system, and the order cannot be queried.
+     *
+     * @param opsRequest
+     * @return
+     * @throws IOException
+     */
+    OrderCreateResponse createOrderTest(OrderCreateApiRequest opsRequest) throws IOException;
+
+    /**
      * Cancel an order
      * <p>
      * Cancel a previously placed order.

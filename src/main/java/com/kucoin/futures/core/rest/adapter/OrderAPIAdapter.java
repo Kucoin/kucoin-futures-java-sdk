@@ -31,6 +31,16 @@ public class OrderAPIAdapter extends AuthRetrofitAPIImpl<OrderAPIRetrofit> imple
     }
 
     @Override
+    public List<OrderCreateMultiResponse> createOrderMulti(List<OrderCreateApiRequest> requests) throws IOException {
+        return executeSync(getAPIImpl().createOrderMulti(requests));
+    }
+
+    @Override
+    public OrderCreateResponse createOrderTest(OrderCreateApiRequest opsRequest) throws IOException {
+        return executeSync(getAPIImpl().createOrderTest(opsRequest));
+    }
+
+    @Override
     public OrderCancelResponse cancelOrder(String orderId) throws IOException {
         return executeSync(getAPIImpl().cancelOrder(orderId));
     }

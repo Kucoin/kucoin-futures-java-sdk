@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -271,6 +272,24 @@ public class KucoinFuturesRestClientTest extends BaseTest {
     public void timeAPI() throws Exception {
         Long serverTimeStamp = futuresRestClient.timeAPI().getServerTimeStamp();
         assertThat(System.currentTimeMillis() - serverTimeStamp, lessThanOrEqualTo(5000L));
+    }
+
+    @Test
+    public void placeOrderTest() throws IOException {
+        OrderCreateApiRequest pageRequest = OrderCreateApiRequest.builder()
+                .price(BigDecimal.valueOf(5)).size(BigDecimal.ONE).side("buy").leverage("5")
+                .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
+        OrderCreateResponse orderTest = futuresRestClient.orderAPI().createOrderTest(pageRequest);
+        assertThat(orderTest, notNullValue());
+    }
+
+    @Test
+    public void placeOrderMultiTest() throws IOException {
+        OrderCreateApiRequest pageRequest = OrderCreateApiRequest.builder()
+                .price(BigDecimal.valueOf(5)).size(BigDecimal.ONE).side("buy").leverage("5")
+                .symbol(SYMBOL).type("limit").clientOid(UUID.randomUUID().toString()).build();
+        List<OrderCreateMultiResponse> orderCreateMultiResponseList = futuresRestClient.orderAPI().createOrderMulti(Arrays.asList(pageRequest));
+        assertThat(orderCreateMultiResponseList, notNullValue());
     }
 
     private OrderCreateResponse placeCannotDealLimitOrder() throws IOException {
