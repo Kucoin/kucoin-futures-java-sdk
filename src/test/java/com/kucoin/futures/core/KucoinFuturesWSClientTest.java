@@ -4,6 +4,7 @@
 
 package com.kucoin.futures.core;
 
+import com.kucoin.futures.core.enums.KLineTypeEnum;
 import com.kucoin.futures.core.model.enums.PrivateChannelEnum;
 import com.kucoin.futures.core.model.enums.PublicChannelEnum;
 import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
@@ -99,6 +100,21 @@ public class KucoinFuturesWSClientTest extends BaseTest {
     }
 
     @Test
+    public void onPositionAllChange() throws Exception {
+        AtomicReference<PositionChangeEvent> event = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(1);
+
+        kucoinFuturesPrivateWSClient.onPositionAllChange(response -> {
+            event.set(response.getData());
+            kucoinFuturesPrivateWSClient.unsubscribe(PrivateChannelEnum.POSITION_ALL);
+            gotEvent.countDown();
+        });
+
+        assertTrue(gotEvent.await(20000, TimeUnit.SECONDS));
+        assertThat(event.get(), notNullValue());
+    }
+
+    @Test
     public void onSymbolOrderChange() throws Exception {
         AtomicReference<OrderChangeEvent> event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
@@ -140,9 +156,9 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         AtomicReference<TickerResponse> event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
 
-        kucoinFuturesPrivateWSClient.onTicker(response -> {
+        kucoinFuturesPublicWSClient.onTicker(response -> {
             event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.TICKER, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.TICKER, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
@@ -178,31 +194,46 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         AtomicReference<Level2OrderBookEvent> depth50Event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(3);
 
-        kucoinFuturesPrivateWSClient.onLevel2Data(response -> {
+        kucoinFuturesPublicWSClient.onLevel2Data(response -> {
             event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.LEVEL2, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
-        kucoinFuturesPrivateWSClient.onLevel2Depth5Data(response -> {
+        kucoinFuturesPublicWSClient.onLevel2Depth5Data(response -> {
             depth5Event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_5, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_5, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
-        kucoinFuturesPrivateWSClient.onLevel2Depth50Data(response -> {
+        kucoinFuturesPublicWSClient.onLevel2Depth50Data(response -> {
             depth50Event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_50, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.LEVEL2_DEPTH_50, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
-
-        // Trigger a market change
-        placeOrderAndCancelOrder();
 
         assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
         assertThat(event.get(), notNullValue());
         assertThat(depth5Event.get(), notNullValue());
         assertThat(depth50Event.get(), notNullValue());
+    }
+
+    @Test
+    public void onKline() throws Exception {
+        AtomicReference<KLineEvent> klineEvent = new AtomicReference<>();
+        CountDownLatch gotEvent = new CountDownLatch(1);
+
+        String subParam = KLineTypeEnum.ONE_MIN.kLineParam(SYMBOL);
+
+        kucoinFuturesPublicWSClient.onKline(response -> {
+            klineEvent.set(response.getData());
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.K_LINE_TOPIC, subParam);
+            gotEvent.countDown();
+        }, subParam);
+
+        assertTrue(gotEvent.await(20, TimeUnit.SECONDS));
+        assertThat(klineEvent.get(), notNullValue());
+
     }
 
     @Test
@@ -248,7 +279,7 @@ public class KucoinFuturesWSClientTest extends BaseTest {
 
         kucoinFuturesPublicWSClient.onContractMarketData(response -> {
             event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.CONTRACT_MARKET, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.CONTRACT_MARKET, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 
@@ -262,9 +293,9 @@ public class KucoinFuturesWSClientTest extends BaseTest {
         AtomicReference<TransactionStatisticEvent> event = new AtomicReference<>();
         CountDownLatch gotEvent = new CountDownLatch(1);
 
-        kucoinFuturesPrivateWSClient.onTransactionStatistic(response -> {
+        kucoinFuturesPublicWSClient.onTransactionStatistic(response -> {
             event.set(response.getData());
-            kucoinFuturesPrivateWSClient.unsubscribe(PublicChannelEnum.TRANSACTION_STATISTIC, SYMBOL);
+            kucoinFuturesPublicWSClient.unsubscribe(PublicChannelEnum.TRANSACTION_STATISTIC, SYMBOL);
             gotEvent.countDown();
         }, SYMBOL);
 

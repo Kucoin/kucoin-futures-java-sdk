@@ -11,6 +11,7 @@ public class OrderChangeEvent {
 
     private String orderId;
     private String symbol;
+    private String feeType;
     private String type;
     private String status;
     private BigDecimal matchSize;

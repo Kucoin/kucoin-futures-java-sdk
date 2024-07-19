@@ -46,6 +46,13 @@ public interface KucoinFuturesPrivateWSClient extends KucoinFuturesPublicWSClien
      */
     String onPositionChange(KucoinFuturesAPICallback<KucoinEvent<PositionChangeEvent>> callback, String ... symbols);
 
+    /**
+     * All Position Change Events
+     *
+     * @param callback
+     * @return
+     */
+    String onPositionAllChange(KucoinFuturesAPICallback<KucoinEvent<PositionChangeEvent>> callback);
 
     /**
      * You will receive a message when the specified symbol order changes

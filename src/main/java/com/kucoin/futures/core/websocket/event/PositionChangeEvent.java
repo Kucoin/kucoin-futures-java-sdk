@@ -81,6 +81,7 @@ public class PositionChangeEvent {
 
     private BigDecimal unrealisedPnlPcnt;
 
+    /** Funding Settlement **/
     private Long fundingTime;
 
     private BigDecimal qty;
@@ -92,5 +93,8 @@ public class PositionChangeEvent {
     private String settleCurrency;
 
     private Long ts;
+
+    /** Adjustment Result of Risk Limit Level **/
+    private Integer riskLimitLevel;
 
 }

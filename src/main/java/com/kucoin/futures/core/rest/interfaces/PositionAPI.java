@@ -3,6 +3,10 @@
  */
 package com.kucoin.futures.core.rest.interfaces;
 
+import com.kucoin.futures.core.rest.request.HistoryPositionsRequest;
+import com.kucoin.futures.core.rest.request.WithdrawMarginRequest;
+import com.kucoin.futures.core.rest.response.HistoryPositionResponse;
+import com.kucoin.futures.core.rest.response.Pagination;
 import com.kucoin.futures.core.rest.response.PositionResponse;
 
 import java.io.IOException;
@@ -34,6 +38,15 @@ public interface PositionAPI {
     List<PositionResponse> getPositions() throws IOException;
 
     /**
+     * This interface can query position history information records
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    Pagination<HistoryPositionResponse> getHistoryPositions(HistoryPositionsRequest request) throws IOException;
+
+    /**
      * Enable/Disable of Auto-Deposit Margin
      *
      * @param symbol Symbol of the contract
@@ -41,6 +54,24 @@ public interface PositionAPI {
      * @throws IOException
      */
     void setAutoDepositMargin(String symbol, boolean status) throws IOException;
+
+    /**
+     * This interface can query the maximum amount of margin that the current position supports withdrawal.
+     *
+     * @param symbol Symbol of the contract
+     * @return The size of the position that can be deposited. If it is USDT-margin, it represents the amount of USDT. If it is coin-margin, this value represents the number of coins
+     * @throws IOException
+     */
+    BigDecimal getMaxWithdrawMargin(String symbol) throws IOException;
+
+    /**
+     * Remove Margin Manually
+     *
+     * @param request
+     * @return The size of the position deposited. If it is USDT-margin, it represents the amount of USDT. If it is coin-margin, this value represents the number of coins
+     * @throws IOException
+     */
+    BigDecimal withdrawMargin(WithdrawMarginRequest request) throws IOException;
 
     /**
      * Add Margin Manually

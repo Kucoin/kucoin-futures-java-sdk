@@ -85,4 +85,10 @@ public class OrderAPIAdapter extends AuthRetrofitAPIImpl<OrderAPIRetrofit> imple
     public List<OrderResponse> getRecentDoneOrders() throws IOException {
         return executeSync(getAPIImpl().queryRecentDoneOrders());
     }
+
+    @Override
+    public TradeFeeResponse getTradeFee(String symbol) throws IOException {
+        return executeSync(getAPIImpl().getTradeFee(symbol));
+    }
+
 }

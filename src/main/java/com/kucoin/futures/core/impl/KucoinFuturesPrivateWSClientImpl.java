@@ -80,6 +80,17 @@ public class KucoinFuturesPrivateWSClientImpl extends KucoinFuturesPublicWSClien
     }
 
     @Override
+    public String onPositionAllChange(KucoinFuturesAPICallback<KucoinEvent<PositionChangeEvent>> callback) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_POSITION_ALL_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_POSITION_ALL_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<PositionChangeEvent>>() {});
+        }
+        String topic = APIConstants.API_POSITION_ALL_TOPIC_PREFIX;
+        return subscribe(topic, true, true);
+    }
+
+    @Override
     public String onOrderChange(KucoinFuturesAPICallback<KucoinEvent<OrderChangeEvent>> callback, String symbol) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_SYMBOL_ORDER_CHANGE_TOPIC_PREFIX, callback);

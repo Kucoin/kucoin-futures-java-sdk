@@ -4,9 +4,7 @@
 package com.kucoin.futures.core;
 
 import com.kucoin.futures.core.exception.KucoinFuturesApiException;
-import com.kucoin.futures.core.rest.request.DuringPageRequest;
-import com.kucoin.futures.core.rest.request.OrderCreateApiRequest;
-import com.kucoin.futures.core.rest.request.WithdrawApplyRequest;
+import com.kucoin.futures.core.rest.request.*;
 import com.kucoin.futures.core.rest.response.*;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
@@ -164,6 +162,9 @@ public class KucoinFuturesRestClientTest extends BaseTest {
         List<OrderResponse> recentDoneOrders = futuresRestClient.orderAPI().getRecentDoneOrders();
         assertThat(recentDoneOrders.size(), greaterThan(0));
 
+        TradeFeeResponse tradeFee = futuresRestClient.orderAPI().getTradeFee(SYMBOL);
+        assertThat(tradeFee, notNullValue());
+
     }
 
     @Test
@@ -191,6 +192,15 @@ public class KucoinFuturesRestClientTest extends BaseTest {
             futuresRestClient.positionAPI().setAutoDepositMargin(SYMBOL, true);
             futuresRestClient.positionAPI().addMarginManually(SYMBOL, BigDecimal.valueOf(0.000001), "123456");
         }
+
+        BigDecimal maxWithdrawMargin = futuresRestClient.positionAPI().getMaxWithdrawMargin(SYMBOL);
+        assertThat(maxWithdrawMargin, notNullValue());
+
+        BigDecimal withdrewMargin = futuresRestClient.positionAPI().withdrawMargin(WithdrawMarginRequest.builder().symbol(SYMBOL).withdrawAmount(new BigDecimal("0.0000001")).build());
+        assertThat(withdrewMargin, notNullValue());
+
+        Pagination<HistoryPositionResponse> historyPositions = futuresRestClient.positionAPI().getHistoryPositions(HistoryPositionsRequest.builder().symbol("BOMEUSDTM").from(startAt).to(endAt).limit(10).pageId(1).build());
+        assertThat(historyPositions, notNullValue());
 
     }
 

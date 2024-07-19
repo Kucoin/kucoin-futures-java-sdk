@@ -133,4 +133,14 @@ public interface OrderAPI {
      */
     OrderResponse getOrderDetail(String orderId) throws IOException;
 
+    /**
+     * This interface is for the actual fee rate of the trading pair.
+     * The fee rate of your sub-account is the same as that of the master account.
+     *
+     * @param symbol Symbol of the contract
+     * @return
+     * @throws IOException
+     */
+    TradeFeeResponse getTradeFee(String symbol) throws IOException;
+
 }

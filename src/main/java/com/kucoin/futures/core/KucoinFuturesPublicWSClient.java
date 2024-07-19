@@ -61,6 +61,15 @@ public interface KucoinFuturesPublicWSClient {
     String onLevel2Depth50Data(KucoinFuturesAPICallback<KucoinEvent<Level2OrderBookEvent>> callback, String... symbols);
 
     /**
+     * Klines
+     *
+     * @param callback
+     * @param subParam symbol_1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 8hour, 12hour, 1day, 1week, 1month
+     * @return
+     */
+    String onKline(KucoinFuturesAPICallback<KucoinEvent<KLineEvent>> callback, String subParam);
+
+    /**
      * For each order executed, the system will send you the match messages in the format as following.
      *
      * @param callback

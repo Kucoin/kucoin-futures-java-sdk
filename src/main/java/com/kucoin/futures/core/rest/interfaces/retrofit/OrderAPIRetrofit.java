@@ -66,4 +66,7 @@ public interface OrderAPIRetrofit {
     @GET("api/v1/recentDoneOrders")
     Call<KucoinFuturesResponse<List<OrderResponse>>> queryRecentDoneOrders();
 
+    @GET("api/v1/trade-fees")
+    Call<KucoinFuturesResponse<TradeFeeResponse>> getTradeFee(@Query("symbol") String symbol);
+
 }

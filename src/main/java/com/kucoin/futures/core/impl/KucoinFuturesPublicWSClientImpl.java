@@ -94,6 +94,17 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     }
 
     @Override
+    public String onKline(KucoinFuturesAPICallback<KucoinEvent<KLineEvent>> callback, String subParam) {
+        if (callback != null) {
+            this.getListener().getCallbackMap().put(APIConstants.API_K_LINE_TOPIC_PREFIX, callback);
+            this.getListener().getTypeReferenceMap().put(APIConstants.API_K_LINE_TOPIC_PREFIX,
+                    new TypeReference<KucoinEvent<KLineEvent>>() {});
+        }
+        String topic = APIConstants.API_K_LINE_TOPIC_PREFIX + subParam;
+        return subscribe(topic, false, true);
+    }
+
+    @Override
     public String onExecutionData(KucoinFuturesAPICallback<KucoinEvent<ExecutionChangeEvent>> callback, String... symbols) {
         if (callback != null) {
             this.getListener().getCallbackMap().put(APIConstants.API_EXECUTION_TOPIC_PREFIX, callback);
@@ -154,8 +165,8 @@ public class KucoinFuturesPublicWSClientImpl extends BaseWebsocketImpl implement
     }
 
     @Override
-    public String unsubscribe(PublicChannelEnum channelEnum, String... symbols) {
-        return super.unsubscribe(channelEnum.getTopicPrefix() + Arrays.stream(symbols).collect(Collectors.joining(",")),
+    public String unsubscribe(PublicChannelEnum channelEnum, String... params) {
+        return super.unsubscribe(channelEnum.getTopicPrefix() + String.join(",", params),
                 false, true);
     }
 
